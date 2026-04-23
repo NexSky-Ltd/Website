@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NexSky — Members</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231A1F3D'/%3E%3Ctext x='4' y='22' font-family='serif' font-size='18' fill='white'%3EN%3C/text%3E%3Ctext x='16' y='22' font-family='serif' font-size='18' fill='%23B8965A'%3ES%3C/text%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --midnight: #1A1F3D;
+    --deep-navy: #252B4D;
+    --slate: #3D4567;
+    --stone: #D4C5B2;
+    --warm-sand: #E8DDD0;
+    --cream: #F5F1EC;
+    --off-white: #FAFAF8;
+    --gold: #B8965A;
+    --gold-light: #D4B87C;
+    --teal: #5B8E8D;
+    --text-primary: #1A1F3D;
+    --text-secondary: #6B7094;
+    --pos: #0a7a3b;
+    --neg: #c9242a;
+  }
+
+  /* === YOUR WORKER URL — edit this after deploy === */
+  /* Set via <script> below too, keeping one source of truth */
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--off-white);
+    color: var(--text-primary);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NAV ── */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 1000; height: 72px; padding: 0 40px;
+    background: rgba(26, 31, 61, 0.97);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-left { display: flex; align-items: center; gap: 20px; }
+  .nav-wordmark { font-family: 'DM Serif Display', serif; font-size: 24px; color: #fff; text-decoration: none; letter-spacing: -0.3px; }
+  .nav-wordmark .sky { color: var(--gold); }
+  .nav-badge { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); padding: 4px 10px; border: 1px solid rgba(184,150,90,0.3); border-radius: 2px; }
+  .nav-right { display: flex; align-items: center; gap: 20px; color: var(--stone); font-size: 12px; }
+  .nav-user .label { opacity: 0.5; letter-spacing: 1.5px; text-transform: uppercase; font-size: 10px; margin-right: 8px; }
+  .nav-logout { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--stone); text-decoration: none; padding: 8px 16px; border: 1px solid rgba(255,255,255,0.12); border-radius: 2px; transition: all 0.3s ease; }
+  .nav-logout:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* ── DESK HEADER ── */
+  .desk-header { margin-top: 72px; padding: 40px 40px 20px; background: var(--midnight); color: #fff; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .desk-header-inner { max-width: 1600px; margin: 0 auto; }
+  .desk-label { font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+  .desk-title { font-family: 'DM Serif Display', serif; font-size: clamp(28px, 4vw, 40px); color: #fff; letter-spacing: -0.5px; margin-bottom: 4px; }
+  .desk-sub { font-weight: 300; font-size: 14px; color: var(--stone); max-width: 720px; }
+
+  /* ── TICKER TAPE ── */
+  .tape-wrap { background: var(--midnight); padding: 0 40px 8px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .tape-wrap .tradingview-widget-container { max-width: 1600px; margin: 0 auto; }
+
+  /* ── MAIN ── */
+  main { padding: 40px; max-width: 1600px; margin: 0 auto; }
+
+  .section { margin-bottom: 48px; }
+  .section-head { display: flex; align-items: baseline; gap: 16px; margin-bottom: 18px; flex-wrap: wrap; }
+  .section-num { font-family: 'DM Serif Display', serif; font-size: 13px; color: var(--gold); letter-spacing: 2px; }
+  .section-title { font-family: 'DM Serif Display', serif; font-size: 26px; color: var(--midnight); letter-spacing: -0.3px; }
+  .section-sub { font-size: 13px; color: var(--text-secondary); margin-left: auto; font-weight: 300; }
+
+  /* ── HORIZON TOGGLE ── */
+  .horizon-toggle {
+    display: inline-flex;
+    background: #fff;
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+  .horizon-toggle button {
+    padding: 10px 16px;
+    border: none;
+    background: transparent;
+    font-family: 'Inter', sans-serif;
+    font-size: 11.5px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    cursor: pointer;
+    border-right: 1px solid rgba(0,0,0,0.05);
+    transition: all 0.15s ease;
+  }
+  .horizon-toggle button:last-child { border-right: none; }
+  .horizon-toggle button:hover { color: var(--midnight); background: var(--cream); }
+  .horizon-toggle button.active { background: var(--midnight); color: #fff; }
+  .horizon-toggle button.active:hover { background: var(--midnight); color: #fff; }
+
+  /* ── HEATMAP ── */
+  .heatmap-category {
+    margin-bottom: 18px;
+  }
+  .cat-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+  .tiles {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 8px;
+  }
+  .tile {
+    background: #fff;
+    border: 1px solid rgba(0,0,0,0.05);
+    border-radius: 4px;
+    padding: 12px 14px;
+    position: relative;
+    overflow: hidden;
+    min-height: 92px;
+    transition: transform 0.15s ease;
+  }
+  .tile::before {
+    content: "";
+    position: absolute; inset: 0;
+    background: var(--tint, transparent);
+    pointer-events: none;
+  }
+  .tile > * { position: relative; }
+  .tile:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(26,31,61,0.08); }
+  .tile-top { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+  .tile-name { font-weight: 600; font-size: 12px; color: #222; letter-spacing: 0.2px; }
+  .tile-chg { font-variant-numeric: tabular-nums; font-weight: 600; font-size: 12.5px; color: var(--accent, #333); white-space: nowrap; }
+  .tile-level { font-size: 18px; font-weight: 600; font-variant-numeric: tabular-nums; color: #111; margin-top: 6px; letter-spacing: -0.3px; }
+  .tile-unit { font-size: 10px; color: #999; font-weight: 400; margin-left: 4px; }
+  .tile-note { font-size: 9.5px; color: #aaa; margin-top: 4px; font-style: italic; }
+  .tile.loading { opacity: 0.4; pointer-events: none; }
+  .tile.error { background: #fff5f5; }
+  .tile.error .tile-level { color: var(--neg); font-size: 11px; font-weight: 400; font-style: italic; }
+
+  /* ── PANELS ── */
+  .panel { background: #fff; border: 1px solid rgba(0,0,0,0.05); border-radius: 4px; overflow: hidden; box-shadow: 0 1px 2px rgba(26,31,61,0.03); }
+  .panel-head { padding: 14px 20px; border-bottom: 1px solid rgba(0,0,0,0.04); font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--slate); font-weight: 600; display: flex; justify-content: space-between; align-items: center; }
+  .panel-head .meta { color: var(--text-secondary); font-weight: 400; letter-spacing: 0.5px; text-transform: none; font-size: 11px; }
+  .panel-body { padding: 0; }
+
+  /* ── SECTOR DRILLDOWN GRID ── */
+  .sector-split { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .sector-half h3 { font-family: 'DM Serif Display', serif; font-size: 18px; color: var(--midnight); margin-bottom: 10px; letter-spacing: -0.2px; }
+  .sector-half h3 .flag { color: var(--gold); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; margin-left: 8px; }
+
+  .grid-2 { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
+
+  /* ── FOOTER ── */
+  .footer { background: var(--midnight); padding: 40px; color: var(--text-secondary); font-size: 12px; text-align: center; border-top: 1px solid rgba(255,255,255,0.06); margin-top: 80px; }
+  .footer .gold-line { width: 40px; height: 2px; background: var(--gold); margin: 0 auto 16px; }
+  .footer-wordmark { font-family: 'DM Serif Display', serif; font-size: 20px; color: #fff; margin-bottom: 4px; }
+  .footer-wordmark .sky { color: var(--gold); }
+  .footer-note { color: var(--text-secondary); margin-top: 12px; font-size: 11px; max-width: 700px; margin-left: auto; margin-right: auto; line-height: 1.6; }
+
+  /* ── BANNER / STATUS ── */
+  .status-banner { font-size: 11px; color: var(--text-secondary); margin-bottom: 12px; padding: 8px 12px; background: var(--cream); border-radius: 3px; display: inline-block; letter-spacing: 0.3px; }
+  .status-banner.error { background: #fff3f3; color: var(--neg); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1100px) {
+    .sector-split, .grid-2 { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 700px) {
+    .nav { padding: 0 20px; }
+    .nav-right { gap: 10px; }
+    .nav-user { display: none; }
+    .desk-header { padding: 28px 20px 16px; }
+    .tape-wrap { padding: 0 20px 8px; }
+    main { padding: 24px 20px; }
+    .footer { padding: 32px 20px; }
+    .horizon-toggle button { padding: 8px 10px; font-size: 10.5px; letter-spacing: 1px; }
+    .tiles { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-left">
+    <a href="/" class="nav-wordmark">Nex<span class="sky">Sky</span></a>
+    <span class="nav-badge">Members</span>
+  </div>
+  <div class="nav-right">
+    <span class="nav-user"><span class="label">Signed in</span><span id="userEmail">—</span></span>
+    <a href="/cdn-cgi/access/logout" class="nav-logout">Sign out</a>
+  </div>
+</nav>
+
+<header class="desk-header">
+  <div class="desk-header-inner">
+    <div class="desk-label">Market Desk</div>
+    <h1 class="desk-title">Global markets, live.</h1>
+    <p class="desk-sub">Cross-asset heatmap with selectable time horizons. Sector deep-dive for US and Europe. Live chart and calendar below.</p>
+  </div>
+</header>
+
+<!-- ═══ TICKER TAPE ═══ -->
+<div class="tape-wrap">
+  <div class="tradingview-widget-container">
+    <div class="tradingview-widget-container__widget"></div>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+    {
+      "symbols": [
+        {"proName":"FOREXCOM:SPXUSD","title":"S&P 500"},
+        {"proName":"FOREXCOM:NSXUSD","title":"Nasdaq 100"},
+        {"proName":"INDEX:STOXX50E","title":"Euro Stoxx 50"},
+        {"proName":"INDEX:NKY","title":"Nikkei 225"},
+        {"proName":"INDEX:HSI","title":"Hang Seng"},
+        {"proName":"TVC:DXY","title":"DXY"},
+        {"proName":"FX:EURUSD","title":"EUR/USD"},
+        {"proName":"FX:USDJPY","title":"USD/JPY"},
+        {"proName":"TVC:US10Y","title":"US 10Y"},
+        {"proName":"TVC:DE10Y","title":"Bund 10Y"},
+        {"proName":"TVC:GOLD","title":"Gold"},
+        {"proName":"TVC:UKOIL","title":"Brent"},
+        {"proName":"BITSTAMP:BTCUSD","title":"BTC"},
+        {"proName":"BITSTAMP:ETHUSD","title":"ETH"},
+        {"proName":"CBOE:VIX","title":"VIX"}
+      ],
+      "showSymbolLogo": false, "isTransparent": true, "displayMode": "adaptive", "colorTheme": "dark", "locale": "en"
+    }
+    </script>
+  </div>
+</div>
+
+<main>
+
+  <!-- ═══ 01 — MACRO HEATMAP ═══ -->
+  <section class="section" id="macro">
+    <div class="section-head">
+      <span class="section-num">01</span>
+      <h2 class="section-title">Cross-asset heatmap</h2>
+      <span class="section-sub" id="macroAsOf">Loading…</span>
+    </div>
+
+    <div class="horizon-toggle" id="macroToggle">
+      <button data-h="1d" class="active">Day</button>
+      <button data-h="1w">Week</button>
+      <button data-h="1m">Month</button>
+      <button data-h="ytd">YTD</button>
+      <button data-h="1y">1 Year</button>
+      <button data-h="3y">3 Years</button>
+      <button data-h="5y">5 Years</button>
+    </div>
+
+    <div id="macroHeatmap">
+      <div class="heatmap-category"><div class="cat-label">Equities</div><div class="tiles" data-cat="equities"></div></div>
+      <div class="heatmap-category"><div class="cat-label">Sovereign Yields</div><div class="tiles" data-cat="yields"></div></div>
+      <div class="heatmap-category"><div class="cat-label">Credit Spreads (OAS)</div><div class="tiles" data-cat="spreads"></div></div>
+      <div class="heatmap-category"><div class="cat-label">Crypto</div><div class="tiles" data-cat="crypto"></div></div>
+      <div class="heatmap-category"><div class="cat-label">Commodities</div><div class="tiles" data-cat="commods"></div></div>
+    </div>
+  </section>
+
+  <!-- ═══ 02 — SECTORS ═══ -->
+  <section class="section" id="sectors">
+    <div class="section-head">
+      <span class="section-num">02</span>
+      <h2 class="section-title">Equity sectors — US &amp; Europe</h2>
+      <span class="section-sub">Summary tiles on top, drill-down treemaps below</span>
+    </div>
+
+    <div class="horizon-toggle" id="sectorToggle">
+      <button data-h="1d" class="active">Day</button>
+      <button data-h="1w">Week</button>
+      <button data-h="1m">Month</button>
+      <button data-h="ytd">YTD</button>
+      <button data-h="1y">1 Year</button>
+      <button data-h="3y">3 Years</button>
+      <button data-h="5y">5 Years</button>
+    </div>
+
+    <div class="sector-split">
+      <div class="sector-half">
+        <h3>US Sectors <span class="flag">SPDR</span></h3>
+        <div class="tiles" data-cat="sectors-us"></div>
+      </div>
+      <div class="sector-half">
+        <h3>EU Sectors <span class="flag">STOXX 600</span></h3>
+        <div class="tiles" data-cat="sectors-eu"></div>
+      </div>
+    </div>
+
+    <div style="margin-top: 28px">
+      <div class="sector-split">
+        <div class="panel">
+          <div class="panel-head">US heatmap — S&amp;P 500 <span class="meta">sized by market cap, colored by 1D</span></div>
+          <div class="panel-body">
+            <div class="tradingview-widget-container">
+              <div class="tradingview-widget-container__widget"></div>
+              <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-stock-heatmap.js" async>
+              {
+                "exchanges": [],
+                "dataSource": "SPX500",
+                "grouping": "sector",
+                "blockSize": "market_cap_basic",
+                "blockColor": "change",
+                "locale": "en",
+                "symbolUrl": "",
+                "colorTheme": "light",
+                "hasTopBar": true,
+                "isDataSetEnabled": true,
+                "isZoomEnabled": true,
+                "hasSymbolTooltip": true,
+                "isMonoSize": false,
+                "width": "100%",
+                "height": 880
+              }
+              </script>
+            </div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-head">EU heatmap — Euro Stoxx 50 <span class="meta">sized by market cap, colored by 1D</span></div>
+          <div class="panel-body">
+            <div class="tradingview-widget-container">
+              <div class="tradingview-widget-container__widget"></div>
+              <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-stock-heatmap.js" async>
+              {
+                "exchanges": [],
+                "dataSource": "SX5E",
+                "grouping": "sector",
+                "blockSize": "market_cap_basic",
+                "blockColor": "change",
+                "locale": "en",
+                "symbolUrl": "",
+                "colorTheme": "light",
+                "hasTopBar": true,
+                "isDataSetEnabled": true,
+                "isZoomEnabled": true,
+                "hasSymbolTooltip": true,
+                "isMonoSize": false,
+                "width": "100%",
+                "height": 880
+              }
+              </script>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ 03 — FOCUS CHART ═══ -->
+  <section class="section">
+    <div class="section-head">
+      <span class="section-num">03</span>
+      <h2 class="section-title">Focus chart</h2>
+      <span class="section-sub">Switch ticker via the search box</span>
+    </div>
+    <div class="grid-2">
+      <div class="panel">
+        <div class="panel-head">Advanced chart <span class="meta">S&amp;P 500 · default</span></div>
+        <div class="panel-body">
+          <div class="tradingview-widget-container" style="height:520px">
+            <div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+            {
+              "autosize": true, "symbol": "FOREXCOM:SPXUSD", "interval": "D", "timezone": "Europe/Brussels",
+              "theme": "light", "style": "2", "locale": "en", "toolbar_bg": "#f5f1ec",
+              "enable_publishing": false, "allow_symbol_change": true,
+              "studies": ["STD;MA_Cross", "STD;RSI"], "calendar": false,
+              "support_host": "https://www.tradingview.com"
+            }
+            </script>
+          </div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-head">Technicals <span class="meta">1D · default SPX</span></div>
+        <div class="panel-body">
+          <div class="tradingview-widget-container" style="height:520px">
+            <div class="tradingview-widget-container__widget"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
+            {
+              "interval": "1D", "width": "100%", "height": "100%", "isTransparent": false,
+              "symbol": "FOREXCOM:SPXUSD", "showIntervalTabs": true, "displayMode": "single",
+              "locale": "en", "colorTheme": "light"
+            }
+            </script>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ 04 — ECONOMIC CALENDAR ═══ -->
+  <section class="section">
+    <div class="section-head">
+      <span class="section-num">04</span>
+      <h2 class="section-title">Economic calendar</h2>
+      <span class="section-sub">High-impact releases · major economies</span>
+    </div>
+    <div class="panel">
+      <div class="panel-body">
+        <div class="tradingview-widget-container">
+          <div class="tradingview-widget-container__widget"></div>
+          <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-events.js" async>
+          {
+            "colorTheme": "light", "isTransparent": false, "width": "100%", "height": "520",
+            "locale": "en", "importanceFilter": "0,1",
+            "countryFilter": "us,eu,gb,de,fr,jp,cn,ch,au,ca"
+          }
+          </script>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="gold-line"></div>
+  <div class="footer-wordmark">Nex<span class="sky">Sky</span></div>
+  <div>On your side. By design.</div>
+  <div class="footer-note">
+    Data is delivered on a best-efforts basis. Yields and OAS spreads via FRED (St. Louis Fed) and the ECB Statistical Data Warehouse. Equities, commodities, crypto via Yahoo Finance.
+    TradingView powers live charts. Nothing here constitutes investment advice. &copy; 2026 NexSky.
+  </div>
+</footer>
+
+<script>
+// ═══ CONFIG — edit this one line after deploying the Cloudflare Worker ═══
+const WORKER_URL = "https://api.nexsky.io/markets";
+// If you deploy the Worker as a route on nexsky.io instead:
+//   const WORKER_URL = "/api/markets";
+
+// ═══ STATE ═══
+let DATA = null;
+let macroHorizon = "1d";
+let sectorHorizon = "1d";
+
+// ═══ HELPERS ═══
+function fmtLevel(v, decimals) {
+  if (v == null || !isFinite(v)) return "—";
+  const abs = Math.abs(v);
+  if (decimals != null) return v.toLocaleString("en-US", { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+  if (abs >= 10000) return v.toLocaleString("en-US", { maximumFractionDigits: 0 });
+  if (abs >= 100)   return v.toFixed(2);
+  if (abs >= 1)     return v.toFixed(2);
+  return v.toFixed(4);
+}
+function fmtPct(v, digits) {
+  digits = digits == null ? 2 : digits;
+  if (v == null || !isFinite(v)) return "—";
+  return (v > 0 ? "+" : "") + (v * 100).toFixed(digits) + "%";
+}
+function fmtBps(v) {
+  if (v == null || !isFinite(v)) return "—";
+  return (v > 0 ? "+" : "") + Math.round(v) + " bp";
+}
+function tintFor(value, invert, scale) {
+  if (value == null || !isFinite(value) || value === 0) {
+    return { tint: "transparent", accent: "#333" };
+  }
+  const mag = Math.min(Math.abs(value) / scale, 1);
+  const up = value > 0;
+  const positiveFramed = invert ? !up : up;
+  const alpha = (0.06 + mag * 0.30).toFixed(3);
+  return positiveFramed
+    ? { tint: `rgba(10,122,59,${alpha})`, accent: "var(--pos)" }
+    : { tint: `rgba(201,36,42,${alpha})`, accent: "var(--neg)" };
+}
+
+function makeTile({ name, level, unit, change, horizon, invert, scale, note }) {
+  const { tint, accent } = tintFor(change, invert, scale);
+  const style = `--tint:${tint};--accent:${accent}`;
+  const levelStr = unit === "%" ? (level == null ? "—" : level.toFixed(3) + "%")
+                 : unit === "bps" ? (level == null ? "—" : Math.round(level * 100) + " bp")
+                 : fmtLevel(level);
+  const chgStr = unit === "%" || unit === "bps" ? fmtBps(change) : fmtPct(change);
+  return `
+    <div class="tile" style="${style}">
+      <div class="tile-top">
+        <div class="tile-name">${name}</div>
+        <div class="tile-chg">${chgStr}</div>
+      </div>
+      <div class="tile-level">${levelStr}</div>
+      ${note ? `<div class="tile-note">${note}</div>` : ""}
+    </div>`;
+}
+function makeLoadingTile(name) {
+  return `<div class="tile loading"><div class="tile-top"><div class="tile-name">${name}</div><div class="tile-chg">—</div></div><div class="tile-level">loading…</div></div>`;
+}
+function makeErrorTile(name, err) {
+  return `<div class="tile error"><div class="tile-top"><div class="tile-name">${name}</div><div class="tile-chg"></div></div><div class="tile-level">${err || "unavailable"}</div></div>`;
+}
+
+// ═══ RENDER ═══
+function renderCategory(selector, items, horizon, kind) {
+  const el = document.querySelector(selector);
+  if (!el) return;
+  if (!items || !items.length) { el.innerHTML = ""; return; }
+  el.innerHTML = items.map(it => {
+    if (it.error) return makeErrorTile(it.name, it.error);
+    // Spreads row: real OAS items carry type="spread" from Worker; the EU IG proxy
+    // carries type="price" (it's a Yahoo ETF). Dispatch per-item.
+    const itemKind = kind === "spread" && it.type === "price" ? "price-proxy" : kind;
+    if (itemKind === "price") {
+      const ret = it.returns && it.returns[horizon];
+      return makeTile({
+        name: it.name, level: it.level, change: ret, horizon,
+        invert: false, scale: 0.03,
+      });
+    }
+    if (itemKind === "price-proxy") {
+      // Credit-style ETF proxy: still a price return, but in credit row.
+      // Invert color so rising price (credit rally / tightening) shows green like other spreads tightening.
+      const ret = it.returns && it.returns[horizon];
+      return makeTile({
+        name: it.name, level: it.level, change: ret, horizon,
+        invert: false, scale: 0.015,  // tighter scale — credit ETFs move less than equities
+        note: it.note || "ETF proxy",
+      });
+    }
+    if (itemKind === "yield") {
+      const ch = it.changes_bps && it.changes_bps[horizon];
+      // For yields, "positive" bps (yield rising) is risk-off → invert color
+      return makeTile({
+        name: it.name, level: it.level, unit: "%", change: ch, horizon,
+        invert: true, scale: 25,
+      });
+    }
+    if (itemKind === "spread") {
+      const ch = it.changes_bps && it.changes_bps[horizon];
+      // For spreads, wider = risk-off → invert (positive = red)
+      return makeTile({
+        name: it.name, level: it.level, unit: "bps", change: ch, horizon,
+        invert: true, scale: 50,
+      });
+    }
+    return makeErrorTile(it.name, "unknown kind");
+  }).join("");
+}
+
+function renderMacro() {
+  if (!DATA) return;
+  const h = macroHorizon;
+  renderCategory('[data-cat="equities"]', DATA.macro.equities, h, "price");
+  // Combine US + DE yields for the yields row
+  const allYields = [...(DATA.macro.usYields || []), ...(DATA.macro.deYields || [])];
+  renderCategory('[data-cat="yields"]', allYields, h, "yield");
+  renderCategory('[data-cat="spreads"]', DATA.macro.spreads, h, "spread");
+  renderCategory('[data-cat="crypto"]', DATA.macro.crypto, h, "price");
+  renderCategory('[data-cat="commods"]', DATA.macro.commods, h, "price");
+}
+function renderSectors() {
+  if (!DATA) return;
+  const h = sectorHorizon;
+  renderCategory('[data-cat="sectors-us"]', DATA.sectors.us, h, "price");
+  renderCategory('[data-cat="sectors-eu"]', DATA.sectors.eu, h, "price");
+}
+
+function renderSkeletons() {
+  const placeholders = {
+    equities: ["S&P 500","Nasdaq 100","Euro Stoxx 50","Nikkei 225","Hang Seng","MSCI EM"],
+    yields: ["US 3M","US 2Y","US 10Y","DE 3M","DE 2Y","DE 10Y"],
+    spreads: ["US IG","US HY","EU IG","EU HY"],
+    crypto: ["Bitcoin","Ethereum"],
+    commods: ["Brent","WTI","Gold","Silver"],
+    "sectors-us": ["Technology","Financials","Healthcare","Consumer Disc.","Consumer Staples","Energy","Industrials","Materials","Utilities","Real Estate","Communications"],
+    "sectors-eu": ["Technology","Banks","Insurance","Healthcare","Automobiles","Food & Beverage","Oil & Gas","Industrial Goods","Basic Resources","Utilities","Telecoms"],
+  };
+  Object.entries(placeholders).forEach(([cat, names]) => {
+    const el = document.querySelector(`[data-cat="${cat}"]`);
+    if (el) el.innerHTML = names.map(makeLoadingTile).join("");
+  });
+}
+
+// ═══ FETCH ═══
+async function loadData() {
+  renderSkeletons();
+  try {
+    const r = await fetch(WORKER_URL);
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    DATA = await r.json();
+    const asOf = new Date(DATA.asOf);
+    const s = asOf.toLocaleString("en-GB", { hour12: false, timeZone: "Europe/Brussels" });
+    const el = document.getElementById("macroAsOf");
+    if (el) el.textContent = "As of " + s + " CET";
+    renderMacro();
+    renderSectors();
+  } catch (e) {
+    const el = document.getElementById("macroAsOf");
+    if (el) { el.textContent = "Data unavailable — " + String(e).slice(0, 80); el.style.color = "var(--neg)"; }
+    // Leave skeletons showing; user sees the shape but marked loading
+  }
+}
+
+// ═══ TOGGLES ═══
+document.getElementById("macroToggle").addEventListener("click", e => {
+  const btn = e.target.closest("button[data-h]");
+  if (!btn) return;
+  document.querySelectorAll("#macroToggle button").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  macroHorizon = btn.dataset.h;
+  renderMacro();
+});
+document.getElementById("sectorToggle").addEventListener("click", e => {
+  const btn = e.target.closest("button[data-h]");
+  if (!btn) return;
+  document.querySelectorAll("#sectorToggle button").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  sectorHorizon = btn.dataset.h;
+  renderSectors();
+});
+
+// ═══ USER EMAIL FROM CLOUDFLARE ACCESS ═══
+(async () => {
+  try {
+    const r = await fetch("/cdn-cgi/access/get-identity", { credentials: "include" });
+    if (!r.ok) return;
+    const data = await r.json();
+    if (data && data.email) document.getElementById("userEmail").textContent = data.email;
+  } catch (_) {}
+})();
+
+// ═══ BOOT ═══
+loadData();
+</script>
+
+</body>
+</html>
