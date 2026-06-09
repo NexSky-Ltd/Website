@@ -1230,11 +1230,9 @@
           </div>
         </div>
       </div>
-      <form class="contact-form" action="https://formsubmit.co/info@nexsky.io" method="POST">
+      <form class="contact-form" id="contactForm" action="https://formspree.io/f/mvznrdgl" method="POST">
         <input type="hidden" name="_subject" value="New enquiry from nexsky.io">
-        <input type="hidden" name="_captcha" value="false">
-        <input type="hidden" name="_next" value="https://nexsky.io">
-        <input type="text" name="_honey" style="display:none">
+        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
         <div class="form-group">
           <label class="form-label" for="name">Full Name</label>
           <input class="form-input" type="text" id="name" name="name" required>
@@ -1252,6 +1250,7 @@
           <textarea class="form-textarea" id="message" name="message" required></textarea>
         </div>
         <button type="submit" class="form-submit">Send Enquiry</button>
+        <p class="form-status" id="formStatus" role="status" aria-live="polite" style="display:none;margin-top:18px;font-size:14px;line-height:1.5;"></p>
       </form>
     </div>
   </div>
@@ -1306,6 +1305,44 @@
   }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
 
   document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // Contact form -> Formspree (AJAX, keeps visitor on-site)
+  const contactForm = document.getElementById('contactForm');
+  if (contactForm) {
+    const statusEl = document.getElementById('formStatus');
+    contactForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = contactForm.querySelector('.form-submit');
+      const label = btn.textContent;
+      btn.disabled = true;
+      btn.textContent = 'Sending\u2026';
+      statusEl.style.display = 'none';
+      try {
+        const res = await fetch(contactForm.action, {
+          method: 'POST',
+          body: new FormData(contactForm),
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          contactForm.reset();
+          btn.textContent = 'Sent';
+          statusEl.style.color = 'var(--teal)';
+          statusEl.textContent = 'Thank you \u2014 your message has been sent. We will be in touch shortly.';
+          statusEl.style.display = 'block';
+        } else {
+          const data = await res.json().catch(() => ({}));
+          const msg = (data.errors && data.errors.map(x => x.message).join(', ')) || 'Submission failed.';
+          throw new Error(msg);
+        }
+      } catch (err) {
+        btn.disabled = false;
+        btn.textContent = label;
+        statusEl.style.color = '#c9242a';
+        statusEl.textContent = 'Something went wrong. Please email us directly at christophe@nexsky.io.';
+        statusEl.style.display = 'block';
+      }
+    });
+  }
 
 </script>
 
