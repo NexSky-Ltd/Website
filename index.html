@@ -998,8 +998,8 @@
 
 <!-- ═══════════ QUOTE ═══════════ -->
 <div class="quote-banner">
-  <div class="quote-text">"On your side. By design."</div>
-  <div class="quote-attr">The NexSky Promise</div>
+  <div class="quote-text">"Having run a single family office, I learned that everything depends on putting the family at the centre. That is what NexSky is built to do — we start from you, and build from there."</div>
+  <div class="quote-attr">Christophe Schaillee — Managing Partner</div>
 </div>
 
 <!-- ═══════════ SERVICES / PILLARS ═══════════ -->
@@ -1176,6 +1176,7 @@
   </div>
   <div class="team-layout fade-in">
     <div>
+      <img src="assets/christophe-schaillee.jpg" alt="Christophe Schaillee, Managing Partner of NexSky" style="width:160px;height:160px;border-radius:50%;object-fit:cover;margin-bottom:28px;border:1px solid var(--warm-sand);" />
       <div class="team-name">Christophe Schaillee</div>
       <div class="team-role">Managing Partner</div>
       <div class="team-bio">
@@ -1261,7 +1262,6 @@
   <div class="footer-inner">
     <div>
       <div class="footer-wordmark">Nex<span class="sky">Sky</span></div>
-      <div class="footer-tagline">On your side. By design.</div>
     </div>
     <div class="footer-right">
       <ul class="footer-links">
@@ -1315,7 +1315,7 @@
       const btn = contactForm.querySelector('.form-submit');
       const label = btn.textContent;
       btn.disabled = true;
-      btn.textContent = 'Sending\u2026';
+      btn.textContent = 'Sending…';
       statusEl.style.display = 'none';
       try {
         const res = await fetch(contactForm.action, {
@@ -1327,7 +1327,7 @@
           contactForm.reset();
           btn.textContent = 'Sent';
           statusEl.style.color = 'var(--teal)';
-          statusEl.textContent = 'Thank you \u2014 your message has been sent. We will be in touch shortly.';
+          statusEl.textContent = 'Thank you — your message has been sent. We will be in touch shortly.';
           statusEl.style.display = 'block';
         } else {
           const data = await res.json().catch(() => ({}));
