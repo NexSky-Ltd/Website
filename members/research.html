@@ -18,27 +18,30 @@
   </div>
   <div class="nav-center">
     <a href="/members/">Hub</a>
-    <a href="/members.html">Market Desk</a>
-    <a href="/members/research.html" class="active">Research</a>
+    <a href="/members/research.html?type=cio">CIO</a>
+    <a href="/members/research.html?type=briefing">Daily Briefing</a>
+    <a href="/members.html">Live Market</a>
+    <a href="/members/research.html?type=opportunities">Opportunities</a>
+    <a href="/members/research.html?type=research">Research</a>
   </div>
   <a href="/cdn-cgi/access/logout" class="nav-logout">Sign out</a>
 </nav>
 
 <header class="page-header">
   <div class="page-header-inner">
-    <div class="page-label">Research Library</div>
-    <h1 class="page-title">Publications &amp; analysis</h1>
-    <p class="page-sub">Research notes, the daily briefing archive, market commentary, and the CIO house view, in one place.</p>
+    <div class="page-label" id="pLabel">Research Library</div>
+    <h1 class="page-title" id="pTitle">Publications &amp; analysis</h1>
+    <p class="page-sub" id="pSub">The CIO house view, daily briefings, opportunities and research, in one place.</p>
   </div>
 </header>
 
 <main>
   <div class="filters" id="filters">
     <button class="filter active" data-type="all">All</button>
-    <button class="filter" data-type="research">Research</button>
-    <button class="filter" data-type="briefing">Briefings</button>
-    <button class="filter" data-type="commentary">Commentary</button>
     <button class="filter" data-type="cio">CIO</button>
+    <button class="filter" data-type="briefing">Daily Briefing</button>
+    <button class="filter" data-type="opportunities">Opportunities</button>
+    <button class="filter" data-type="research">Research</button>
   </div>
   <div class="lib-grid" id="libGrid"><div class="lib-empty">Loading&hellip;</div></div>
 </main>
@@ -50,12 +53,30 @@
 
 <script src="/members/library.js"></script>
 <script>
+  const HEADERS = {
+    all: ['Research Library', 'Publications & analysis', 'The CIO house view, daily briefings, opportunities and research, in one place.'],
+    cio: ['CIO House View', 'House view & positioning', 'Strategic asset allocation and the monthly tactical stance.'],
+    briefing: ['Daily Briefing', 'Morning briefing archive', 'Overnight moves, the day ahead, and what we are watching.'],
+    opportunities: ['Opportunities', 'Deal teasers & co-investment', 'Private opportunities and co-investment invitations for members.'],
+    research: ['Research', 'Notes & white papers', 'In-depth research and thematic work.']
+  };
   const params = new URLSearchParams(location.search);
-  function setActive(t){ document.querySelectorAll('.filter').forEach(b => b.classList.toggle('active', b.dataset.type === t)); }
-  function show(t){ setActive(t); renderGrid('libGrid', { type: t }); }
+  function setHeader(t){
+    const h = HEADERS[t] || HEADERS.all;
+    document.getElementById('pLabel').textContent = h[0];
+    document.getElementById('pTitle').textContent = h[1];
+    document.getElementById('pSub').textContent = h[2];
+    document.title = 'NexSky — ' + h[0];
+  }
+  function setFilter(t){ document.querySelectorAll('.filter').forEach(b => b.classList.toggle('active', b.dataset.type === t)); }
+  function setNav(t){ document.querySelectorAll('.nav-center a').forEach(a => a.classList.toggle('active', a.getAttribute('href').includes('type=' + t))); }
+  function show(t){ setFilter(t); setNav(t); setHeader(t); renderGrid('libGrid', { type: t }); }
   document.getElementById('filters').addEventListener('click', e => {
     const b = e.target.closest('.filter');
-    if (b) show(b.dataset.type);
+    if (!b) return;
+    const t = b.dataset.type;
+    history.replaceState(null, '', t === 'all' ? location.pathname : location.pathname + '?type=' + t);
+    show(t);
   });
   show(params.get('type') || 'all');
 </script>

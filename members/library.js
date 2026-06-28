@@ -5,7 +5,7 @@ async function loadLibrary() {
   return r.json();
 }
 function typeLabel(t) {
-  return ({ research: 'Research', briefing: 'Briefing', commentary: 'Commentary', cio: 'CIO House View' })[t] || t;
+  return ({ cio: 'CIO House View', briefing: 'Daily Briefing', research: 'Research', opportunities: 'Opportunities' })[t] || t;
 }
 function fmtDate(d) {
   try { return new Date(d + 'T00:00:00').toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }); }

@@ -27,7 +27,7 @@ body{font-family:'Inter',sans-serif;background:var(--off-white);color:var(--text
 main{padding:40px;max-width:1400px;margin:0 auto;}
 
 /* HUB CARDS */
-.hub-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
+.hub-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;}
 .hub-card{display:block;text-decoration:none;border-radius:8px;padding:26px 22px;transition:transform .2s,box-shadow .2s;}
 .hub-card:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(26,31,61,0.10);}
 .hub-card.primary{background:var(--midnight);color:#fff;}
