@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NexSky — Your Family Office. Without the Overhead.</title>
+<title>NexSky | Your Family Office. Without the Overhead.</title>
 <meta name="description" content="NexSky is a boutique family office serving a select number of families. Single-family-office depth without the overhead. Conflict-free by design.">
 <meta name="keywords" content="family office, multi-family office, wealth management, UHNWI, estate planning, investment management">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231A1F3D'/%3E%3Ctext x='4' y='22' font-family='serif' font-size='18' fill='white'%3EN%3C/text%3E%3Ctext x='16' y='22' font-family='serif' font-size='18' fill='%23B8965A'%3ES%3C/text%3E%3C/svg%3E">
@@ -19,7 +19,7 @@
     --off-white: #FAFAF8;
     --gold: #B8965A;
     --gold-light: #D4B87C;
-    --teal: #5B8E8D;
+    --gold-dark: #9A7A48;
     --text-primary: #1A1F3D;
     --text-secondary: #6B7094;
   }
@@ -145,7 +145,7 @@
     right: -30%;
     width: 80%;
     height: 200%;
-    background: radial-gradient(ellipse, rgba(91,142,141,0.06) 0%, transparent 70%);
+    background: radial-gradient(ellipse, rgba(184,150,90,0.07) 0%, transparent 70%);
     pointer-events: none;
   }
 
@@ -166,13 +166,13 @@
     letter-spacing: 4px;
     text-transform: uppercase;
     color: var(--gold);
-    margin-bottom: 48px;
+    margin-bottom: 40px;
     position: relative;
   }
 
   .hero-wordmark {
     font-family: 'DM Serif Display', serif;
-    font-size: clamp(56px, 8vw, 96px);
+    font-size: clamp(56px, 8vw, 104px);
     color: #FFFFFF;
     letter-spacing: -1px;
     margin-bottom: 24px;
@@ -183,19 +183,19 @@
 
   .hero-tagline {
     font-weight: 300;
-    font-size: clamp(18px, 2.5vw, 22px);
+    font-size: clamp(20px, 2.6vw, 26px);
     color: var(--stone);
     letter-spacing: 0.5px;
-    margin-bottom: 20px;
+    margin-bottom: 24px;
     position: relative;
   }
 
   .hero-sub {
     font-weight: 300;
-    font-size: 16px;
+    font-size: 17px;
     color: var(--text-secondary);
-    max-width: 560px;
-    line-height: 1.7;
+    max-width: 760px;
+    line-height: 1.8;
     margin-bottom: 48px;
     position: relative;
   }
@@ -249,14 +249,14 @@
 
   /* ── SECTIONS ── */
   .section {
-    padding: 120px 80px;
+    padding: 100px 80px;
     max-width: 1400px;
     margin: 0 auto;
   }
 
   .section-dark {
     background: var(--midnight);
-    padding: 120px 80px;
+    padding: 100px 80px;
   }
 
   .section-dark .section-inner {
@@ -266,7 +266,7 @@
 
   .section-cream {
     background: var(--cream);
-    padding: 120px 80px;
+    padding: 100px 80px;
   }
 
   .section-cream .section-inner {
@@ -276,7 +276,7 @@
 
   .section-sand {
     background: var(--warm-sand);
-    padding: 120px 80px;
+    padding: 100px 80px;
   }
 
   .section-sand .section-inner {
@@ -306,55 +306,88 @@
     font-size: 18px;
     color: var(--text-secondary);
     margin-bottom: 60px;
-    max-width: 640px;
+    max-width: 880px;
     line-height: 1.7;
   }
 
   .section-dark .section-subtitle { color: var(--stone); }
 
-  /* ── PROBLEM SECTION ── */
-  .problem-grid {
+  /* ── POSITIONING (between PB and SFO) ── */
+  .positioning {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    align-items: center;
+    grid-template-columns: 1fr auto 1.18fr auto 1fr;
+    align-items: stretch;
+    margin-bottom: 72px;
   }
 
-  .problem-stat {
-    margin-bottom: 40px;
+  .position-card {
+    background: #FFFFFF;
+    border: 1px solid rgba(0,0,0,0.06);
+    border-radius: 6px;
+    padding: 38px 30px;
+    display: flex;
+    flex-direction: column;
   }
 
-  .problem-stat-number {
+  .position-card--center {
+    border: 1px solid var(--gold);
+    box-shadow: 0 16px 48px rgba(26,31,61,0.12);
+    position: relative;
+    transform: translateY(-10px);
+  }
+
+  .position-tag {
+    position: absolute;
+    top: -13px;
+    left: 30px;
+    background: var(--gold);
+    color: var(--midnight);
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 5px 13px;
+    border-radius: 2px;
+  }
+
+  .position-label {
     font-family: 'DM Serif Display', serif;
-    font-size: 56px;
-    color: var(--gold);
-    line-height: 1;
-    margin-bottom: 8px;
+    font-size: 25px;
+    color: var(--midnight);
+    margin-bottom: 14px;
   }
 
-  .problem-stat-label {
+  .position-card--center .position-label { color: var(--gold-dark); }
+
+  .position-desc {
     font-size: 14px;
+    line-height: 1.7;
     color: var(--text-secondary);
-    font-weight: 400;
-    line-height: 1.6;
   }
 
-  .problem-text {
+  .position-connector {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 6px;
+  }
+
+  .position-connector span {
+    width: 30px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--stone), var(--gold));
+    display: block;
+  }
+
+  .about-narrative {
+    max-width: 940px;
     font-size: 17px;
-    line-height: 1.8;
+    line-height: 1.85;
     color: var(--slate);
   }
 
-  .problem-text p {
-    margin-bottom: 24px;
-  }
-
-  .gold-line {
-    width: 40px;
-    height: 2px;
-    background: var(--gold);
-    margin: 32px 0;
-  }
+  .about-narrative p { margin-bottom: 22px; }
+  .about-narrative p:last-child { margin-bottom: 0; }
 
   /* ── SERVICES / PILLARS ── */
   .pillars-grid {
@@ -389,29 +422,41 @@
   .pillar-card:hover { background: rgba(255,255,255,0.07); }
 
   .pillar-icon {
-    width: 48px;
-    height: 48px;
+    width: 56px;
+    height: 56px;
     border-radius: 50%;
-    background: rgba(184,150,90,0.12);
+    background: rgba(184,150,90,0.14);
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 24px;
+    margin-bottom: 26px;
   }
 
   .pillar-icon svg {
-    width: 22px;
-    height: 22px;
+    width: 26px;
+    height: 26px;
     stroke: var(--gold);
     fill: none;
     stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
   }
 
   .pillar-name {
     font-family: 'DM Serif Display', serif;
-    font-size: 22px;
+    font-size: 27px;
     color: #FFFFFF;
-    margin-bottom: 12px;
+    margin-bottom: 16px;
+    line-height: 1.1;
+  }
+
+  .pillar-name::after {
+    content: '';
+    display: block;
+    width: 36px;
+    height: 2px;
+    background: var(--gold);
+    margin-top: 14px;
   }
 
   .pillar-desc {
@@ -453,41 +498,44 @@
 
   .principle-card {
     text-align: center;
-    padding: 48px 24px;
+    padding: 44px 24px;
     background: #FFFFFF;
     border-radius: 4px;
     border: 1px solid rgba(0,0,0,0.04);
+    border-top: 2px solid var(--gold);
     transition: all 0.3s ease;
   }
 
   .principle-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 12px 40px rgba(26,31,61,0.08);
+    box-shadow: 0 12px 40px rgba(26,31,61,0.10);
   }
 
   .principle-icon {
-    width: 52px;
-    height: 52px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
-    background: rgba(184,150,90,0.1);
+    background: rgba(184,150,90,0.10);
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto 20px;
+    margin: 0 auto 22px;
   }
 
   .principle-icon svg {
-    width: 22px;
-    height: 22px;
+    width: 26px;
+    height: 26px;
     stroke: var(--gold);
     fill: none;
     stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
   }
 
   .principle-name {
     font-family: 'DM Serif Display', serif;
-    font-size: 19px;
-    margin-bottom: 10px;
+    font-size: 21px;
+    margin-bottom: 12px;
     color: var(--midnight);
   }
 
@@ -500,8 +548,8 @@
   /* ── FEE MODEL ── */
   .fee-layout {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
+    grid-template-columns: 0.85fr 1fr;
+    gap: 72px;
     align-items: start;
   }
 
@@ -533,7 +581,7 @@
     padding: 32px;
     display: flex;
     align-items: flex-start;
-    gap: 20px;
+    gap: 22px;
     transition: all 0.3s ease;
   }
 
@@ -542,30 +590,20 @@
     border-color: rgba(184,150,90,0.2);
   }
 
-  .fee-card-icon {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    background: rgba(184,150,90,0.12);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  .fee-card-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 30px;
+    color: var(--gold);
+    line-height: 1;
     flex-shrink: 0;
-  }
-
-  .fee-card-icon svg {
-    width: 20px;
-    height: 20px;
-    stroke: var(--gold);
-    fill: none;
-    stroke-width: 1.5;
+    width: 40px;
   }
 
   .fee-card-title {
     font-family: 'DM Serif Display', serif;
-    font-size: 20px;
+    font-size: 21px;
     color: #FFFFFF;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
   }
 
   .fee-card-desc {
@@ -574,9 +612,45 @@
     color: var(--text-secondary);
   }
 
+  .fee-note {
+    margin-top: 28px;
+    background: rgba(184,150,90,0.08);
+    border: 1px solid rgba(184,150,90,0.22);
+    border-left: 4px solid var(--gold);
+    border-radius: 4px;
+    padding: 28px 36px;
+  }
+
+  .fee-note-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    color: #FFFFFF;
+    margin-bottom: 6px;
+  }
+
+  .fee-note-desc {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--stone);
+    max-width: 720px;
+  }
+
   /* ── TEAM ── */
-  .team-layout {
-    max-width: 780px;
+  .team-grid {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 60px;
+    align-items: start;
+    max-width: 1120px;
+  }
+
+  .team-photo img {
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 1px solid var(--warm-sand);
+    display: block;
   }
 
   .team-name {
@@ -592,7 +666,7 @@
     font-weight: 500;
     letter-spacing: 1.5px;
     text-transform: uppercase;
-    margin-bottom: 32px;
+    margin-bottom: 28px;
   }
 
   .team-bio {
@@ -608,8 +682,8 @@
   .team-details {
     display: flex;
     gap: 48px;
-    margin-top: 32px;
-    padding-top: 32px;
+    margin-top: 24px;
+    padding-top: 24px;
     border-top: 1px solid var(--warm-sand);
   }
 
@@ -640,7 +714,7 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    margin-top: 32px;
+    margin-top: 28px;
     padding: 12px 24px;
     background: var(--off-white);
     border: 1px solid var(--warm-sand);
@@ -813,13 +887,6 @@
 
   .footer-wordmark .sky { color: var(--gold); }
 
-  .footer-tagline {
-    font-weight: 300;
-    font-size: 13px;
-    color: var(--text-secondary);
-    letter-spacing: 0.5px;
-  }
-
   .footer-right {
     text-align: right;
   }
@@ -850,18 +917,25 @@
   /* ── QUOTE BANNER ── */
   .quote-banner {
     background: var(--cream);
-    padding: 80px;
+    padding: 120px 80px;
     text-align: center;
+  }
+
+  .quote-rule {
+    width: 48px;
+    height: 2px;
+    background: var(--gold);
+    margin: 0 auto 36px;
   }
 
   .quote-text {
     font-family: 'DM Serif Display', serif;
     font-style: italic;
-    font-size: clamp(24px, 3vw, 36px);
+    font-size: clamp(26px, 3.2vw, 40px);
     color: var(--midnight);
-    max-width: 800px;
-    margin: 0 auto 20px;
-    line-height: 1.4;
+    max-width: 1040px;
+    margin: 0 auto 28px;
+    line-height: 1.45;
   }
 
   .quote-attr {
@@ -888,6 +962,9 @@
   @media (max-width: 1100px) {
     .principles-grid { grid-template-columns: repeat(3, 1fr); }
     .pillars-grid { grid-template-columns: repeat(2, 1fr); }
+    .positioning { grid-template-columns: 1fr; gap: 28px; }
+    .position-connector { display: none; }
+    .position-card--center { transform: none; }
   }
 
   @media (max-width: 900px) {
@@ -906,15 +983,21 @@
       gap: 24px;
     }
 
-    .section, .section-dark, .section-cream, .section-sand { padding: 80px 24px; }
+    .section, .section-dark, .section-cream, .section-sand { padding: 72px 24px; }
     .hero { padding: 100px 24px 80px; }
 
-    .problem-grid,
     .fee-layout,
     .contact-layout {
       grid-template-columns: 1fr;
       gap: 48px;
     }
+
+    .team-grid {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+
+    .team-photo img { width: 220px; height: 220px; }
 
     .principles-grid { grid-template-columns: repeat(2, 1fr); }
     .pillars-grid { grid-template-columns: 1fr; }
@@ -923,7 +1006,7 @@
     .footer { padding: 40px 24px; }
     .footer-inner { flex-direction: column; align-items: flex-start; gap: 24px; }
     .footer-right { text-align: left; }
-    .quote-banner { padding: 60px 24px; }
+    .quote-banner { padding: 72px 24px; }
     .team-details { flex-direction: column; gap: 20px; }
     .fee-layout { gap: 40px; }
   }
@@ -965,41 +1048,43 @@
   </div>
 </section>
 
-<!-- ═══════════ ABOUT / PROBLEM ═══════════ -->
+<!-- ═══════════ ABOUT / POSITIONING ═══════════ -->
 <section class="section" id="about">
   <div class="fade-in">
     <div class="section-number">01</div>
     <h2 class="section-title">The gap the industry left behind</h2>
     <div class="section-subtitle">Too complex for private banking. Not large enough to justify a full single-family office. A space the industry has structurally underserved.</div>
   </div>
-  <div class="problem-grid fade-in">
-    <div>
-      <div class="problem-stat">
-        <div class="problem-stat-number" style="font-size: 40px;">Private Banking</div>
-        <div class="problem-stat-label">Product-driven. Constrained by house offerings, shared relationship managers, and a sales-first model.</div>
-      </div>
-      <div class="problem-stat">
-        <div class="problem-stat-number" style="color: var(--teal); font-size: 40px;">NexSky</div>
-        <div class="problem-stat-label">Single-family-office depth for a select number of families — without the cost and complexity of building one.</div>
-      </div>
-      <div class="problem-stat">
-        <div class="problem-stat-number" style="font-size: 40px;">Single Family Office</div>
-        <div class="problem-stat-label">The gold standard — but requires significant infrastructure, headcount, and overhead to operate.</div>
-      </div>
+
+  <div class="positioning fade-in">
+    <div class="position-card">
+      <div class="position-label">Private Banking</div>
+      <div class="position-desc">Product-driven. Constrained by house offerings, shared relationship managers, and a sales-first model.</div>
     </div>
-    <div class="problem-text">
-      <p>The wealth management industry consolidated around scale — not around you. Private banks push house products through layers of relationship managers. Single-family offices deliver the right depth, but require substantial overhead to run.</p>
-      <p>NexSky sits between the two. We deliver the holistic scope and senior attention of a dedicated family office — across investing, lifestyle, legacy, and administration — without the infrastructure burden.</p>
-      <div class="gold-line"></div>
-      <p>Senior professionals make the decisions. AI augments the execution. The result is institutional-quality service with the intimacy and attention of a dedicated partner.</p>
+    <div class="position-connector"><span></span></div>
+    <div class="position-card position-card--center">
+      <div class="position-tag">Where we sit</div>
+      <div class="position-label">NexSky</div>
+      <div class="position-desc">Single-family-office depth for a select number of families, without the cost and complexity of building one.</div>
     </div>
+    <div class="position-connector"><span></span></div>
+    <div class="position-card">
+      <div class="position-label">Single Family Office</div>
+      <div class="position-desc">The gold standard, but it requires significant infrastructure, headcount and overhead to operate.</div>
+    </div>
+  </div>
+
+  <div class="about-narrative fade-in">
+    <p>The wealth management industry consolidated around scale, not around you. Private banks push house products through layers of relationship managers. Single-family offices deliver the right depth, but require substantial overhead to run.</p>
+    <p>NexSky sits between the two. We deliver the holistic scope and senior attention of a dedicated family office, across investing, lifestyle, legacy and administration, without the infrastructure burden. Senior professionals make the decisions; AI augments the execution. The result is institutional-quality service with the intimacy and attention of a dedicated partner.</p>
   </div>
 </section>
 
 <!-- ═══════════ QUOTE ═══════════ -->
 <div class="quote-banner">
-  <div class="quote-text">"Having run a single family office, I learned that everything depends on putting the family at the centre. That is what NexSky is built to do — we start from you, and build from there."</div>
-  <div class="quote-attr">Christophe Schaillee — Managing Partner</div>
+  <div class="quote-rule"></div>
+  <div class="quote-text">"Having run a single family office, I learned that everything depends on putting the family at the centre. That is what NexSky is built to do. We start from you, and build from there."</div>
+  <div class="quote-attr">Christophe Schaillee, Managing Partner</div>
 </div>
 
 <!-- ═══════════ SERVICES / PILLARS ═══════════ -->
@@ -1008,46 +1093,46 @@
     <div class="fade-in">
       <div class="section-number">02</div>
       <h2 class="section-title">Four pillars. One partner.</h2>
-      <div class="section-subtitle">Every dimension of your wealth, managed with coherence. Not in silos — as one integrated whole.</div>
+      <div class="section-subtitle">Every dimension of your wealth, managed with coherence. Not in silos, but as one integrated whole.</div>
     </div>
     <div class="pillars-grid fade-in">
       <!-- Investing -->
       <div class="pillar-card">
         <div class="pillar-icon">
-          <svg viewBox="0 0 24 24"><path d="M2 20h20M5 20V10l4-6 4 4 4-4 3 3v13"/></svg>
+          <svg viewBox="0 0 24 24"><polyline points="3 17 9 11 13 15 21 7"/><polyline points="15 7 21 7 21 13"/></svg>
         </div>
         <div class="pillar-name">Investing</div>
         <div class="pillar-desc">Portfolio strategy and management with institutional discipline, tailored to your family's objectives and risk profile.</div>
         <div class="pillar-items">
           <div class="pillar-item">Strategic asset allocation</div>
-          <div class="pillar-item">Manager selection & oversight</div>
-          <div class="pillar-item">Direct & co-investment access</div>
-          <div class="pillar-item">Risk monitoring & reporting</div>
+          <div class="pillar-item">Manager selection &amp; oversight</div>
+          <div class="pillar-item">Direct &amp; co-investment access</div>
+          <div class="pillar-item">Risk monitoring &amp; reporting</div>
         </div>
       </div>
       <!-- Lifestyle -->
       <div class="pillar-card">
         <div class="pillar-icon">
-          <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M5 17a7 7 0 0 1 14 0"/><line x1="3" y1="17" x2="21" y2="17"/><line x1="12" y1="6" x2="12" y2="10"/><circle cx="12" cy="4.5" r="1.2"/><path d="M10 20a2 2 0 0 0 4 0"/></svg>
         </div>
         <div class="pillar-name">Lifestyle</div>
         <div class="pillar-desc">Day-to-day management of the administrative complexity that comes with multi-jurisdictional wealth.</div>
         <div class="pillar-items">
-          <div class="pillar-item">Property & asset administration</div>
-          <div class="pillar-item">Insurance & risk management</div>
-          <div class="pillar-item">Travel & household coordination</div>
+          <div class="pillar-item">Property &amp; asset administration</div>
+          <div class="pillar-item">Insurance &amp; risk management</div>
+          <div class="pillar-item">Travel &amp; household coordination</div>
           <div class="pillar-item">Concierge-level project management</div>
         </div>
       </div>
       <!-- Legacy -->
       <div class="pillar-card">
         <div class="pillar-icon">
-          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 3 21 9 3 9"/><line x1="3" y1="21" x2="21" y2="21"/><line x1="6.5" y1="21" x2="6.5" y2="9"/><line x1="12" y1="21" x2="12" y2="9"/><line x1="17.5" y1="21" x2="17.5" y2="9"/></svg>
         </div>
         <div class="pillar-name">Legacy</div>
         <div class="pillar-desc">Succession planning and wealth preservation across generations, ensuring continuity of vision and values.</div>
         <div class="pillar-items">
-          <div class="pillar-item">Succession & estate planning</div>
+          <div class="pillar-item">Succession &amp; estate planning</div>
           <div class="pillar-item">Governance frameworks</div>
           <div class="pillar-item">Next-generation education</div>
           <div class="pillar-item">Philanthropic strategy</div>
@@ -1056,15 +1141,15 @@
       <!-- Administration -->
       <div class="pillar-card">
         <div class="pillar-icon">
-          <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 22 8 12 14 2 8"/><polyline points="2 12 12 18 22 12"/><polyline points="2 16 12 22 22 16"/></svg>
         </div>
         <div class="pillar-name">Administration</div>
-        <div class="pillar-desc">Operational backbone of the family office — consolidated reporting, compliance, and coordination of all advisors.</div>
+        <div class="pillar-desc">Operational backbone of the family office: consolidated reporting, compliance, and coordination of all advisors.</div>
         <div class="pillar-items">
           <div class="pillar-item">Consolidated financial reporting</div>
-          <div class="pillar-item">Tax coordination & compliance</div>
-          <div class="pillar-item">Advisor & service provider oversight</div>
-          <div class="pillar-item">Digital infrastructure & security</div>
+          <div class="pillar-item">Tax coordination &amp; compliance</div>
+          <div class="pillar-item">Advisor &amp; service provider oversight</div>
+          <div class="pillar-item">Digital infrastructure &amp; security</div>
         </div>
       </div>
     </div>
@@ -1082,7 +1167,7 @@
     <div class="principles-grid fade-in">
       <div class="principle-card">
         <div class="principle-icon">
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg>
         </div>
         <div class="principle-name">Aligned</div>
         <div class="principle-desc">No products. No retrocessions. Our interests are structurally inseparable from yours.</div>
@@ -1096,21 +1181,21 @@
       </div>
       <div class="principle-card">
         <div class="principle-icon">
-          <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="6"/><polyline points="8.5 13.6 7 21 12 18 17 21 15.5 13.6"/></svg>
         </div>
         <div class="principle-name">Investment Grade</div>
         <div class="principle-desc">Institutional quality in-house. We are a peer, not a product distributor.</div>
       </div>
       <div class="principle-card">
         <div class="principle-icon">
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+          <svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="2"/><circle cx="18" cy="6" r="2"/><circle cx="12" cy="18" r="2"/><line x1="7.6" y1="7.4" x2="10.7" y2="16.3"/><line x1="16.4" y1="7.4" x2="13.3" y2="16.3"/><line x1="8" y1="6" x2="16" y2="6"/></svg>
         </div>
         <div class="principle-name">Resourceful</div>
         <div class="principle-desc">Best-in-class specialists coordinated as one team through our network.</div>
       </div>
       <div class="principle-card">
         <div class="principle-icon">
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg>
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><line x1="12" y1="3" x2="12" y2="21"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="5.6" y1="5.6" x2="18.4" y2="18.4"/><line x1="18.4" y1="5.6" x2="5.6" y2="18.4"/></svg>
         </div>
         <div class="principle-name">Holistic</div>
         <div class="principle-desc">Every decision made with full awareness of all others. That coherence is the service.</div>
@@ -1125,44 +1210,34 @@
     <div class="fade-in">
       <div class="section-number">04</div>
       <h2 class="section-title">How we charge</h2>
-      <div class="section-subtitle">Simplicity and alignment are not just principles — they extend to how we are compensated.</div>
+      <div class="section-subtitle">Simplicity and alignment are not just principles. They extend to how we are compensated.</div>
     </div>
     <div class="fee-layout fade-in">
       <div>
         <div class="fee-headline">Two components.<br>Complete transparency.</div>
-        <div class="fee-text">Our fee structure is built on two simple components — no product commissions, no retrocessions, no hidden charges. You always know exactly what you pay and why.</div>
-        <div class="gold-line" style="margin-top: 24px;"></div>
+        <div class="fee-text">Our fee structure is built on two simple components, with no product commissions, no retrocessions and no hidden charges. You always know exactly what you pay, and why.</div>
         <div class="fee-text" style="font-style: italic; color: var(--text-secondary); font-size: 14px;">To discuss specific fee levels tailored to your situation, please reach out directly.</div>
       </div>
       <div class="fee-cards">
         <div class="fee-card">
-          <div class="fee-card-icon">
-            <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
-          </div>
+          <div class="fee-card-num">01</div>
           <div>
             <div class="fee-card-title">Monthly Membership Fee</div>
-            <div class="fee-card-desc">A fixed monthly fee gives you full access to the NexSky platform — covering all four pillars of service: investing, lifestyle, legacy, and administration. One invoice, no surprises.</div>
+            <div class="fee-card-desc">A fixed monthly fee gives you full access to the NexSky platform, covering all four pillars of service: investing, lifestyle, legacy and administration. One invoice, no surprises.</div>
           </div>
         </div>
         <div class="fee-card">
-          <div class="fee-card-icon">
-            <svg viewBox="0 0 24 24"><path d="M2 20h20M5 20V10l4-6 4 4 4-4 3 3v13"/></svg>
-          </div>
+          <div class="fee-card-num">02</div>
           <div>
             <div class="fee-card-title">Management Fee</div>
-            <div class="fee-card-desc">A management fee charged on assets under oversight — aligning our incentives directly with the performance and growth of your wealth.</div>
-          </div>
-        </div>
-        <div class="fee-card">
-          <div class="fee-card-icon">
-            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          </div>
-          <div>
-            <div class="fee-card-title">No Retrocessions. Ever.</div>
-            <div class="fee-card-desc">We do not receive commissions from product providers. Our only revenue comes from you — ensuring permanent alignment of interests.</div>
+            <div class="fee-card-desc">A management fee charged on assets under oversight, aligning our incentives directly with the performance and growth of your wealth.</div>
           </div>
         </div>
       </div>
+    </div>
+    <div class="fee-note fade-in">
+      <div class="fee-note-title">No retrocessions. Ever.</div>
+      <div class="fee-note-desc">We do not receive commissions from product providers. Our only revenue comes from you, ensuring permanent alignment of interests.</div>
     </div>
   </div>
 </section>
@@ -1174,24 +1249,26 @@
     <h2 class="section-title">Your partner</h2>
     <div class="section-subtitle">NexSky is built around senior decision-makers, not layers of delegation.</div>
   </div>
-  <div class="team-layout fade-in">
-    <div>
-      <img src="christophe-schaillee.jpg" alt="Christophe Schaillee, Managing Partner of NexSky" style="width:160px;height:160px;border-radius:50%;object-fit:cover;margin-bottom:28px;border:1px solid var(--warm-sand);" />
+  <div class="team-grid fade-in">
+    <div class="team-photo">
+      <img src="christophe-schaillee.jpg" alt="Christophe Schaillee, Managing Partner of NexSky" />
+    </div>
+    <div class="team-content">
       <div class="team-name">Christophe Schaillee</div>
       <div class="team-role">Managing Partner</div>
       <div class="team-bio">
-        <p>Christophe founded NexSky to deliver the level of attention and alignment that select families deserve — but rarely receive from the industry as it exists today.</p>
-        <p>With deep experience across investment management, wealth structuring, and family office operations, Christophe brings a principal-level perspective to every client relationship. He works directly with each family — no layers, no delegation of decisions.</p>
+        <p>Christophe founded NexSky to deliver the level of attention and alignment that select families deserve, but rarely receive from the industry as it exists today.</p>
+        <p>With deep experience across investment management, wealth structuring, and family office operations, Christophe brings a principal-level perspective to every client relationship. He works directly with each family, with no layers and no delegation of decisions.</p>
         <p>Based between London and Monaco, Christophe combines institutional rigour with the agility and discretion of a dedicated family office partner.</p>
       </div>
       <div class="team-details">
         <div>
           <div class="team-detail-label">Based in</div>
-          <div class="team-detail-value">London & Monaco</div>
+          <div class="team-detail-value">London &amp; Monaco</div>
         </div>
         <div>
           <div class="team-detail-label">Focus</div>
-          <div class="team-detail-value">Investment & Wealth Strategy</div>
+          <div class="team-detail-value">Investment &amp; Wealth Strategy</div>
         </div>
       </div>
       <a href="https://www.linkedin.com/in/schaillee/" target="_blank" rel="noopener noreferrer" class="team-linkedin">
@@ -1315,7 +1392,7 @@
       const btn = contactForm.querySelector('.form-submit');
       const label = btn.textContent;
       btn.disabled = true;
-      btn.textContent = 'Sending…';
+      btn.textContent = 'Sending...';
       statusEl.style.display = 'none';
       try {
         const res = await fetch(contactForm.action, {
@@ -1326,8 +1403,8 @@
         if (res.ok) {
           contactForm.reset();
           btn.textContent = 'Sent';
-          statusEl.style.color = 'var(--teal)';
-          statusEl.textContent = 'Thank you — your message has been sent. We will be in touch shortly.';
+          statusEl.style.color = 'var(--gold-dark)';
+          statusEl.textContent = 'Thank you. Your message has been sent, and we will be in touch shortly.';
           statusEl.style.display = 'block';
         } else {
           const data = await res.json().catch(() => ({}));
