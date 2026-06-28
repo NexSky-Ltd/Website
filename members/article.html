@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NexSky — Members</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231A1F3D'/%3E%3Ctext x='4' y='22' font-family='serif' font-size='18' fill='white'%3EN%3C/text%3E%3Ctext x='16' y='22' font-family='serif' font-size='18' fill='%23B8965A'%3ES%3C/text%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/members/portal.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-left">
+    <a href="/members/" class="nav-wordmark">Nex<span class="sky">Sky</span></a>
+    <span class="nav-badge">Members</span>
+  </div>
+  <div class="nav-center">
+    <a href="/members/">Hub</a>
+    <a href="/members.html">Market Desk</a>
+    <a href="/members/research.html">Research</a>
+  </div>
+  <a href="/cdn-cgi/access/logout" class="nav-logout">Sign out</a>
+</nav>
+
+<main style="margin-top:96px">
+  <a class="back-link" href="/members/research.html">&larr; Back to library</a>
+  <article class="article" id="article"><div class="lib-empty">Loading&hellip;</div></article>
+</main>
+
+<footer class="footer">
+  <div class="footer-wordmark">Nex<span class="sky">Sky</span></div>
+  <div>Private &amp; confidential &middot; For NexSky members only</div>
+</footer>
+
+<script src="/members/library.js"></script>
+<script>
+  (async () => {
+    const slug = new URLSearchParams(location.search).get('slug');
+    const el = document.getElementById('article');
+    if (!slug || !/^[a-z0-9\-]+$/i.test(slug)) { el.innerHTML = '<div class="lib-empty">No article specified.</div>'; return; }
+    try {
+      const items = await loadLibrary();
+      const meta = items.find(i => i.slug === slug) || {};
+      const res = await fetch('/members/content/' + slug + '.html', { cache: 'no-cache' });
+      const body = res.ok ? await res.text() : '<p>This piece is not available.</p>';
+      document.title = 'NexSky — ' + (meta.title || 'Members');
+      el.innerHTML =
+        '<div class="article-tag">' + esc(typeLabel(meta.type || '')) + '</div>' +
+        '<h1>' + esc(meta.title || slug) + '</h1>' +
+        '<div class="article-meta">' + esc(fmtDate(meta.date || '')) + ' &middot; NexSky</div>' +
+        '<div class="article-body">' + body + '</div>';
+    } catch (e) {
+      el.innerHTML = '<div class="lib-empty">Unable to load this piece.</div>';
+    }
+  })();
+</script>
+</body>
+</html>

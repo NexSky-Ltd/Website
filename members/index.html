@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NexSky — Members</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231A1F3D'/%3E%3Ctext x='4' y='22' font-family='serif' font-size='18' fill='white'%3EN%3C/text%3E%3Ctext x='16' y='22' font-family='serif' font-size='18' fill='%23B8965A'%3ES%3C/text%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/members/portal.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-left">
+    <a href="/members/" class="nav-wordmark">Nex<span class="sky">Sky</span></a>
+    <span class="nav-badge">Members</span>
+  </div>
+  <div class="nav-center">
+    <a href="/members/" class="active">Hub</a>
+    <a href="/members.html">Market Desk</a>
+    <a href="/members/research.html">Research</a>
+  </div>
+  <a href="/cdn-cgi/access/logout" class="nav-logout">Sign out</a>
+</nav>
+
+<header class="page-header">
+  <div class="page-header-inner">
+    <div class="page-label">Members Portal</div>
+    <h1 class="page-title">Welcome back</h1>
+    <p class="page-sub">Your private desk: live markets, our latest research, the daily briefing archive, and the house view.</p>
+  </div>
+</header>
+
+<main>
+  <div class="hub-grid">
+    <a class="hub-card primary" href="/members.html">
+      <svg class="hub-icon" viewBox="0 0 24 24"><line x1="4" y1="20" x2="20" y2="20"/><rect x="5" y="11" width="3" height="9"/><rect x="10.5" y="6" width="3" height="14"/><rect x="16" y="13" width="3" height="7"/></svg>
+      <div class="hub-name">Market Desk</div>
+      <div class="hub-desc">Live cross-asset heatmap, sectors, charts and calendar.</div>
+    </a>
+    <a class="hub-card secondary" href="/members/research.html">
+      <svg class="hub-icon" viewBox="0 0 24 24"><path d="M6 2h8l4 4v16H6z"/><path d="M14 2v4h4"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>
+      <div class="hub-name">Research</div>
+      <div class="hub-desc">Notes, white papers and teasers.</div>
+    </a>
+    <a class="hub-card secondary" href="/members/research.html?type=briefing">
+      <svg class="hub-icon" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="16" rx="1"/><line x1="4" y1="9" x2="20" y2="9"/><line x1="9" y1="3" x2="9" y2="6"/><line x1="15" y1="3" x2="15" y2="6"/></svg>
+      <div class="hub-name">Daily Briefings</div>
+      <div class="hub-desc">Searchable archive, updated each morning.</div>
+    </a>
+    <a class="hub-card secondary" href="/members/research.html?type=cio">
+      <svg class="hub-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polygon points="12 7 14 12 12 17 10 12"/></svg>
+      <div class="hub-name">CIO House View</div>
+      <div class="hub-desc">Strategic allocation and tactical positioning.</div>
+    </a>
+  </div>
+
+  <div class="section-head"><span class="section-num">01</span><span class="section-title">Latest</span></div>
+  <div class="lib-grid" id="libGrid"><div class="lib-empty">Loading&hellip;</div></div>
+</main>
+
+<footer class="footer">
+  <div class="footer-wordmark">Nex<span class="sky">Sky</span></div>
+  <div>Private &amp; confidential &middot; For NexSky members only</div>
+</footer>
+
+<script src="/members/library.js"></script>
+<script>renderGrid('libGrid', { limit: 6 });</script>
+</body>
+</html>
