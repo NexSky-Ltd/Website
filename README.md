@@ -8,6 +8,7 @@ Public marketing site + password-protected Members dashboard.
 |---|---|---|
 | `index.html` | `nexsky.io/` | Public marketing site |
 | `members.html` | `nexsky.io/members` | Protected live markets dashboard |
+| `christophe-schaillee.jpg` | `nexsky.io/christophe-schaillee.jpg` | Founder headshot (Team section) |
 | `CNAME` | — | Tells GitHub Pages to serve on `nexsky.io` |
 | `worker.js` | `api.nexsky.io/markets` | Cloudflare Worker (deployed separately, not served from this repo) |
 | `SETUP.md` | — | Deployment walkthrough |
@@ -43,7 +44,7 @@ Public marketing site + password-protected Members dashboard.
 
 ## Deployment
 
-One-time setup, three independent steps:
+One-time setup, four independent steps:
 
 1. **GitHub Pages** — push this repo to GitHub, enable Pages in repo Settings → Pages (source: main branch). The `CNAME` file tells GitHub to serve at `nexsky.io`.
 2. **Cloudflare DNS + Proxy** — point `nexsky.io` CNAME to `<username>.github.io` with proxy (orange cloud) enabled.
@@ -52,6 +53,16 @@ One-time setup, three independent steps:
 
 Full step-by-step in `SETUP.md`.
 
+## Analytics & privacy
+
+All analytics live in `index.html` (no analytics on the Members page).
+
+- **Cloudflare Web Analytics** — cookieless, privacy-first. Beacon embedded before `</body>` (`data-cf-beacon` token). Requires no consent; runs for every visitor.
+- **Google Analytics 4** (`G-LFRBN1ZES3`) — loaded via `gtag.js` in `<head>` with **Consent Mode**, defaulted to `denied`. A slim consent banner (bottom of page) lets the visitor opt in; the choice is stored in `localStorage` under the key `nexsky-consent`. GA4 analytics cookies fire only after **Accept** — compliant for EU/Monaco visitors.
+- **Google Search Console** — verified via the `google-site-verification` meta tag in `<head>`. Bing Webmaster Tools imports its data from Search Console.
+
+To revoke/change consent during testing: clear the `nexsky-consent` key in the browser's localStorage and reload.
+
 ## Updating users
 
 Cloudflare dashboard → **Zero Trust → Access → Applications → NexSky Members → Policies → edit Emails list**. Instant.
@@ -59,6 +70,11 @@ Cloudflare dashboard → **Zero Trust → Access → Applications → NexSky Mem
 ## Data refresh
 
 Market data cached 10 minutes at the Worker edge. Member tiles refresh on page load.
+
+## Members dashboard notes
+
+- Cross-asset heatmap, sector tiles, and macro data are driven by the Worker (`api.nexsky.io/markets`).
+- The market heatmap is a single full-width TradingView treemap defaulting to `dataSource` `SPX500` (S&P 500); users switch index via the widget's toolbar (`isDataSetEnabled` + `hasTopBar`). The ticker tape uses TradingView `TVC:` feeds for indices/VIX for reliability.
 
 ## Stack
 

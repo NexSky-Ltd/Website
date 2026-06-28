@@ -271,7 +271,7 @@
     <div class="section-head">
       <span class="section-num">02</span>
       <h2 class="section-title">Equity sectors — US &amp; Europe</h2>
-      <span class="section-sub">Summary tiles on top, drill-down treemaps below</span>
+      <span class="section-sub">Sector summary tiles on top, full market heatmap below</span>
     </div>
 
     <div class="horizon-toggle" id="sectorToggle">
@@ -296,59 +296,30 @@
     </div>
 
     <div style="margin-top: 28px">
-      <div class="sector-split">
-        <div class="panel">
-          <div class="panel-head">US heatmap — S&amp;P 500 <span class="meta">sized by market cap, colored by 1D</span></div>
-          <div class="panel-body">
-            <div class="tradingview-widget-container">
-              <div class="tradingview-widget-container__widget"></div>
-              <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-stock-heatmap.js" async>
-              {
-                "exchanges": [],
-                "dataSource": "SPX500",
-                "grouping": "sector",
-                "blockSize": "market_cap_basic",
-                "blockColor": "change",
-                "locale": "en",
-                "symbolUrl": "",
-                "colorTheme": "light",
-                "hasTopBar": true,
-                "isDataSetEnabled": true,
-                "isZoomEnabled": true,
-                "hasSymbolTooltip": true,
-                "isMonoSize": false,
-                "width": "100%",
-                "height": 880
-              }
-              </script>
-            </div>
-          </div>
-        </div>
-        <div class="panel">
-          <div class="panel-head">EU heatmap — STOXX Europe 600 <span class="meta">sized by market cap, colored by 1D</span></div>
-          <div class="panel-body">
-            <div class="tradingview-widget-container">
-              <div class="tradingview-widget-container__widget"></div>
-              <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-stock-heatmap.js" async>
-              {
-                "exchanges": [],
-                "dataSource": "STOXX600",
-                "grouping": "sector",
-                "blockSize": "market_cap_basic",
-                "blockColor": "change",
-                "locale": "en",
-                "symbolUrl": "",
-                "colorTheme": "light",
-                "hasTopBar": true,
-                "isDataSetEnabled": true,
-                "isZoomEnabled": true,
-                "hasSymbolTooltip": true,
-                "isMonoSize": false,
-                "width": "100%",
-                "height": 880
-              }
-              </script>
-            </div>
+      <div class="panel">
+        <div class="panel-head">Market heatmap <span class="meta">S&amp;P 500 default · switch index in the toolbar · sized by market cap, coloured by 1D</span></div>
+        <div class="panel-body">
+          <div class="tradingview-widget-container">
+            <div class="tradingview-widget-container__widget"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-stock-heatmap.js" async>
+            {
+              "exchanges": [],
+              "dataSource": "SPX500",
+              "grouping": "sector",
+              "blockSize": "market_cap_basic",
+              "blockColor": "change",
+              "locale": "en",
+              "symbolUrl": "",
+              "colorTheme": "light",
+              "hasTopBar": true,
+              "isDataSetEnabled": true,
+              "isZoomEnabled": true,
+              "hasSymbolTooltip": true,
+              "isMonoSize": false,
+              "width": "100%",
+              "height": 720
+            }
+            </script>
           </div>
         </div>
       </div>
@@ -365,15 +336,16 @@
     <div class="panel">
       <div class="panel-head">Advanced chart <span class="meta">S&amp;P 500 · default · searchable</span></div>
       <div class="panel-body">
-        <div class="tradingview-widget-container" style="height:640px">
+        <div class="tradingview-widget-container" style="height:680px">
           <div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div>
           <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
           {
-            "autosize": true, "symbol": "FOREXCOM:SPXUSD", "interval": "D", "timezone": "Europe/Brussels",
+            "width": "100%", "height": 680,
+            "symbol": "FOREXCOM:SPXUSD", "interval": "D", "timezone": "Europe/Brussels",
             "theme": "light", "style": "1", "locale": "en", "toolbar_bg": "#f5f1ec",
             "enable_publishing": false, "allow_symbol_change": true, "hide_side_toolbar": false,
-            "withdateranges": true, "details": true,
-            "studies": ["STD;MA_Cross", "STD;RSI"], "calendar": false,
+            "withdateranges": true, "details": false,
+            "studies": ["STD;MA_Cross"], "calendar": false,
             "support_host": "https://www.tradingview.com"
           }
           </script>
