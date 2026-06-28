@@ -25,9 +25,6 @@
     --neg: #c9242a;
   }
 
-  /* === YOUR WORKER URL — edit this after deploy === */
-  /* Set via <script> below too, keeping one source of truth */
-
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
@@ -220,9 +217,9 @@
       "symbols": [
         {"proName":"FOREXCOM:SPXUSD","title":"S&P 500"},
         {"proName":"FOREXCOM:NSXUSD","title":"Nasdaq 100"},
-        {"proName":"INDEX:STOXX50E","title":"Euro Stoxx 50"},
-        {"proName":"INDEX:NKY","title":"Nikkei 225"},
-        {"proName":"INDEX:HSI","title":"Hang Seng"},
+        {"proName":"TVC:SX5E","title":"Euro Stoxx 50"},
+        {"proName":"TVC:NI225","title":"Nikkei 225"},
+        {"proName":"TVC:HSI","title":"Hang Seng"},
         {"proName":"TVC:DXY","title":"DXY"},
         {"proName":"FX:EURUSD","title":"EUR/USD"},
         {"proName":"FX:USDJPY","title":"USD/JPY"},
@@ -232,7 +229,7 @@
         {"proName":"TVC:UKOIL","title":"Brent"},
         {"proName":"BITSTAMP:BTCUSD","title":"BTC"},
         {"proName":"BITSTAMP:ETHUSD","title":"ETH"},
-        {"proName":"CBOE:VIX","title":"VIX"}
+        {"proName":"TVC:VIX","title":"VIX"}
       ],
       "showSymbolLogo": false, "isTransparent": true, "displayMode": "adaptive", "colorTheme": "dark", "locale": "en"
     }
@@ -328,14 +325,14 @@
           </div>
         </div>
         <div class="panel">
-          <div class="panel-head">EU heatmap — Euro Stoxx 50 <span class="meta">sized by market cap, colored by 1D</span></div>
+          <div class="panel-head">EU heatmap — STOXX Europe 600 <span class="meta">sized by market cap, colored by 1D</span></div>
           <div class="panel-body">
             <div class="tradingview-widget-container">
               <div class="tradingview-widget-container__widget"></div>
               <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-stock-heatmap.js" async>
               {
                 "exchanges": [],
-                "dataSource": "SX5E",
+                "dataSource": "STOXX600",
                 "grouping": "sector",
                 "blockSize": "market_cap_basic",
                 "blockColor": "change",
@@ -363,35 +360,36 @@
     <div class="section-head">
       <span class="section-num">03</span>
       <h2 class="section-title">Focus chart</h2>
-      <span class="section-sub">Switch ticker via the search box</span>
+      <span class="section-sub">Change ticker via the search box in the chart</span>
     </div>
-    <div class="grid-2">
-      <div class="panel">
-        <div class="panel-head">Advanced chart <span class="meta">S&amp;P 500 · default</span></div>
-        <div class="panel-body">
-          <div class="tradingview-widget-container" style="height:520px">
-            <div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div>
-            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
-            {
-              "autosize": true, "symbol": "FOREXCOM:SPXUSD", "interval": "D", "timezone": "Europe/Brussels",
-              "theme": "light", "style": "2", "locale": "en", "toolbar_bg": "#f5f1ec",
-              "enable_publishing": false, "allow_symbol_change": true,
-              "studies": ["STD;MA_Cross", "STD;RSI"], "calendar": false,
-              "support_host": "https://www.tradingview.com"
-            }
-            </script>
-          </div>
+    <div class="panel">
+      <div class="panel-head">Advanced chart <span class="meta">S&amp;P 500 · default · searchable</span></div>
+      <div class="panel-body">
+        <div class="tradingview-widget-container" style="height:640px">
+          <div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div>
+          <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+          {
+            "autosize": true, "symbol": "FOREXCOM:SPXUSD", "interval": "D", "timezone": "Europe/Brussels",
+            "theme": "light", "style": "1", "locale": "en", "toolbar_bg": "#f5f1ec",
+            "enable_publishing": false, "allow_symbol_change": true, "hide_side_toolbar": false,
+            "withdateranges": true, "details": true,
+            "studies": ["STD;MA_Cross", "STD;RSI"], "calendar": false,
+            "support_host": "https://www.tradingview.com"
+          }
+          </script>
         </div>
       </div>
+    </div>
+    <div style="margin-top: 20px">
       <div class="panel">
-        <div class="panel-head">Technicals <span class="meta">1D · default SPX</span></div>
+        <div class="panel-head">Technicals <span class="meta">multi-timeframe · S&amp;P 500</span></div>
         <div class="panel-body">
-          <div class="tradingview-widget-container" style="height:520px">
-            <div class="tradingview-widget-container__widget"></div>
+          <div class="tradingview-widget-container" style="height:450px">
+            <div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div>
             <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
             {
               "interval": "1D", "width": "100%", "height": "100%", "isTransparent": false,
-              "symbol": "FOREXCOM:SPXUSD", "showIntervalTabs": true, "displayMode": "single",
+              "symbol": "FOREXCOM:SPXUSD", "showIntervalTabs": true, "displayMode": "multiple",
               "locale": "en", "colorTheme": "light"
             }
             </script>
@@ -429,7 +427,6 @@
 <footer class="footer">
   <div class="gold-line"></div>
   <div class="footer-wordmark">Nex<span class="sky">Sky</span></div>
-  <div>On your side. By design.</div>
   <div class="footer-note">
     Data is delivered on a best-efforts basis. Yields and OAS spreads via FRED (St. Louis Fed) and the ECB Statistical Data Warehouse. Equities, commodities, crypto via Yahoo Finance.
     TradingView powers live charts. Nothing here constitutes investment advice. &copy; 2026 NexSky.
