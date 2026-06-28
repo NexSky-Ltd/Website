@@ -1,0 +1,20 @@
+{
+  "asOf": "2026-06-28",
+  "note": "PLACEHOLDER DATA — replace tilts and peer stances with the live house view and each bank's latest published positioning.",
+  "assetClasses": [
+    { "key": "equities",     "label": "Equities",     "saa": 45, "tilt": "N",  "change": "down" },
+    { "key": "fixed_income", "label": "Fixed income", "saa": 30, "tilt": "OW", "change": "up" },
+    { "key": "alternatives", "label": "Alternatives", "saa": 15, "tilt": "OW", "change": "flat" },
+    { "key": "real_assets",  "label": "Real assets",  "saa": 5,  "tilt": "N",  "change": "flat" },
+    { "key": "cash",         "label": "Cash",         "saa": 5,  "tilt": "N",  "change": "flat" }
+  ],
+  "peers": ["NexSky", "UBS", "Pictet", "Citi", "JPMorgan", "BlackRock", "Goldman", "Morgan Stanley"],
+  "stances": {
+    "equities":     { "NexSky": "N",  "UBS": "OW", "Pictet": "N",  "Citi": "OW", "JPMorgan": "OW", "BlackRock": "OW", "Goldman": "OW", "Morgan Stanley": "N" },
+    "fixed_income": { "NexSky": "OW", "UBS": "N",  "Pictet": "OW", "Citi": "N",  "JPMorgan": "N",  "BlackRock": "N",  "Goldman": "N",  "Morgan Stanley": "OW" },
+    "alternatives": { "NexSky": "OW", "UBS": "OW", "Pictet": "OW", "Citi": "N",  "JPMorgan": "OW", "BlackRock": "N",  "Goldman": "N",  "Morgan Stanley": "OW" },
+    "real_assets":  { "NexSky": "N",  "UBS": "N",  "Pictet": "UW", "Citi": "N",  "JPMorgan": "N",  "BlackRock": "OW", "Goldman": "N",  "Morgan Stanley": "N" },
+    "cash":         { "NexSky": "N",  "UBS": "UW", "Pictet": "N",  "Citi": "UW", "JPMorgan": "UW", "BlackRock": "N",  "Goldman": "UW", "Morgan Stanley": "N" }
+  },
+  "commentary": "We add to high-grade duration and trim cyclical equity. Cash continues to earn its keep as dry powder for dislocations."
+}

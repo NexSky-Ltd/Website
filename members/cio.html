@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NexSky — CIO House View</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231A1F3D'/%3E%3Ctext x='4' y='22' font-family='serif' font-size='18' fill='white'%3EN%3C/text%3E%3Ctext x='16' y='22' font-family='serif' font-size='18' fill='%23B8965A'%3ES%3C/text%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/members/portal.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-left">
+    <a href="/members/" class="nav-wordmark">Nex<span class="sky">Sky</span></a>
+    <span class="nav-badge">Members</span>
+  </div>
+  <div class="nav-center">
+    <a href="/members/">Hub</a>
+    <a href="/members/cio.html" class="active">CIO</a>
+    <a href="/members/research.html?type=briefing">Daily Briefing</a>
+    <a href="/members.html">Live Market</a>
+    <a href="/members/research.html?type=opportunities">Opportunities</a>
+    <a href="/members/research.html?type=research">Research</a>
+  </div>
+  <a href="/cdn-cgi/access/logout" class="nav-logout">Sign out</a>
+</nav>
+
+<header class="page-header">
+  <div class="page-header-inner">
+    <div class="page-label">CIO House View</div>
+    <h1 class="page-title">House view &amp; positioning</h1>
+    <p class="page-sub">Our strategic allocation, the current tactical tilts and changes, and how we sit against the major houses.</p>
+  </div>
+</header>
+
+<main>
+  <div class="alloc-panel" id="allocPanel"><div class="lib-empty" style="padding:24px">Loading allocation&hellip;</div></div>
+
+  <div class="section-head"><span class="section-num">02</span><span class="section-title">CIO notes</span></div>
+  <div class="lib-grid" id="libGrid"><div class="lib-empty">Loading&hellip;</div></div>
+</main>
+
+<footer class="footer">
+  <div class="footer-wordmark">Nex<span class="sky">Sky</span></div>
+  <div>Private &amp; confidential &middot; For NexSky members only &middot; Not investment advice</div>
+</footer>
+
+<script src="/members/library.js"></script>
+<script>
+  const STANCE_FULL = { OW: 'Overweight', N: 'Neutral', UW: 'Underweight' };
+  const CHG = { up: '&uarr; add', down: '&darr; trim', flat: '&ndash;' };
+
+  (async () => {
+    const panel = document.getElementById('allocPanel');
+    try {
+      const r = await fetch('/members/allocation.json', { cache: 'no-cache' });
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      const d = await r.json();
+
+      const rows = d.assetClasses.map(a =>
+        '<div class="alloc-row">' +
+          '<div class="alloc-name">' + esc(a.label) + '</div>' +
+          '<div class="alloc-bar"><span style="width:' + Number(a.saa) + '%"></span></div>' +
+          '<div><span class="stance ' + a.tilt + '">' + (STANCE_FULL[a.tilt] || a.tilt) + '</span></div>' +
+          '<div class="alloc-chg ' + a.change + '">' + (CHG[a.change] || '&ndash;') + '</div>' +
+        '</div>'
+      ).join('');
+
+      const peers = d.peers || [];
+      const header = '<div class="ph"></div>' + peers.map((p, i) =>
+        '<div class="ph" style="color:' + (i === 0 ? '#1A1F3D' : '#6B7094') + '">' + esc(p) + '</div>'
+      ).join('');
+      const body = d.assetClasses.map(a => {
+        const cells = peers.map(p => {
+          const s = (d.stances[a.key] || {})[p] || '';
+          return '<div class="peer-cell ' + s + '">' + s + '</div>';
+        }).join('');
+        return '<div class="rl">' + esc(a.label) + '</div>' + cells;
+      }).join('');
+      const cols = '150px repeat(' + peers.length + ', minmax(64px, 1fr))';
+
+      panel.innerHTML =
+        '<div class="alloc-head"><span class="t">Asset allocation &middot; House view</span><span class="meta">As of ' + esc(fmtDate(d.asOf)) + '</span></div>' +
+        '<div class="alloc-sec"><div class="cap">Strategic weight &amp; tactical tilt</div>' + rows + '</div>' +
+        '<div class="alloc-sec"><div class="cap">How we compare &middot; major houses</div>' +
+          '<div class="peer-wrap"><div class="peer-grid" style="grid-template-columns:' + cols + '">' + header + body + '</div></div>' +
+          '<div class="alloc-note">OW overweight &middot; N neutral &middot; UW underweight. Peer stances as reported in each house\'s published monthly view.</div>' +
+        '</div>' +
+        (d.commentary ? '<div class="alloc-commentary"><strong>This month:</strong> ' + esc(d.commentary) + '</div>' : '');
+    } catch (e) {
+      panel.innerHTML = '<div class="lib-empty" style="padding:24px">Allocation view unavailable right now.</div>';
+    }
+  })();
+
+  renderGrid('libGrid', { type: 'cio' });
+</script>
+</body>
+</html>
