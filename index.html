@@ -3,11 +3,29 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="google-site-verification" content="11_Mtnz9TSPRmFAs3J-Mm_bht_opeLag-RGlAxzWMJs" />
 <title>NexSky | Your Family Office. Without the Overhead.</title>
 <meta name="description" content="NexSky is a boutique family office serving a select number of families. Single-family-office depth without the overhead. Conflict-free by design.">
 <meta name="keywords" content="family office, multi-family office, wealth management, UHNWI, estate planning, investment management">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231A1F3D'/%3E%3Ctext x='4' y='22' font-family='serif' font-size='18' fill='white'%3EN%3C/text%3E%3Ctext x='16' y='22' font-family='serif' font-size='18' fill='%23B8965A'%3ES%3C/text%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<!-- Google tag (gtag.js) with Consent Mode -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-LFRBN1ZES3"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {
+    'ad_storage': 'denied',
+    'ad_user_data': 'denied',
+    'ad_personalization': 'denied',
+    'analytics_storage': 'denied'
+  });
+  if (window.localStorage && localStorage.getItem('nexsky-consent') === 'granted') {
+    gtag('consent', 'update', { 'analytics_storage': 'granted' });
+  }
+  gtag('js', new Date());
+  gtag('config', 'G-LFRBN1ZES3');
+</script>
 <style>
   :root {
     --midnight: #1A1F3D;
@@ -980,6 +998,73 @@
     text-transform: uppercase;
   }
 
+  /* ── COOKIE CONSENT ── */
+  .cookie-consent {
+    position: fixed;
+    left: 24px;
+    right: 24px;
+    bottom: 24px;
+    max-width: 780px;
+    margin: 0 auto;
+    background: var(--midnight);
+    border: 1px solid rgba(184,150,90,0.3);
+    border-radius: 6px;
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    z-index: 2000;
+    box-shadow: 0 16px 48px rgba(0,0,0,0.35);
+  }
+
+  .cookie-text {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--stone);
+    flex: 1;
+  }
+
+  .cookie-actions {
+    display: flex;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+
+  .cookie-btn {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 10px 22px;
+    border-radius: 2px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: all 0.3s ease;
+  }
+
+  .cookie-accept { background: var(--gold); color: var(--midnight); }
+  .cookie-accept:hover { background: var(--gold-light); }
+  .cookie-decline {
+    background: transparent;
+    color: var(--stone);
+    border-color: rgba(212,197,178,0.4);
+  }
+  .cookie-decline:hover { border-color: var(--gold); color: var(--gold); }
+
+  @media (max-width: 600px) {
+    .cookie-consent {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 14px;
+      left: 12px;
+      right: 12px;
+      bottom: 12px;
+      padding: 18px;
+    }
+    .cookie-actions { justify-content: flex-end; }
+  }
+
   /* ── ANIMATIONS ── */
   .fade-in {
     opacity: 0;
@@ -1505,7 +1590,40 @@
     });
   }
 
+  // Cookie consent banner (Google Consent Mode)
+  (function(){
+    var banner = document.getElementById('cookieConsent');
+    if (!banner) return;
+    if (!(window.localStorage && localStorage.getItem('nexsky-consent'))) {
+      banner.hidden = false;
+    }
+    function choose(v){
+      try { localStorage.setItem('nexsky-consent', v); } catch (e) {}
+      banner.hidden = true;
+      if (v === 'granted' && typeof gtag === 'function') {
+        gtag('consent', 'update', { 'analytics_storage': 'granted' });
+      }
+    }
+    var a = document.getElementById('cookieAccept');
+    var d = document.getElementById('cookieDecline');
+    if (a) a.addEventListener('click', function(){ choose('granted'); });
+    if (d) d.addEventListener('click', function(){ choose('denied'); });
+  })();
+
 </script>
+
+<!-- Cookie consent -->
+<div id="cookieConsent" class="cookie-consent" role="dialog" aria-label="Cookie consent" hidden>
+  <div class="cookie-text">We use privacy-first analytics to understand how this site is used. You can accept analytics cookies, or continue with essential only.</div>
+  <div class="cookie-actions">
+    <button type="button" class="cookie-btn cookie-decline" id="cookieDecline">Decline</button>
+    <button type="button" class="cookie-btn cookie-accept" id="cookieAccept">Accept</button>
+  </div>
+</div>
+
+<!-- Cloudflare Web Analytics -->
+<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "da07c8ef478f49269807ce0de973bbb0"}'></script>
+<!-- End Cloudflare Web Analytics -->
 
 </body>
 </html>
