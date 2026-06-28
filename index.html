@@ -1593,7 +1593,7 @@
   }
 
   // Cookie consent banner (Google Consent Mode)
-  (function(){
+  document.addEventListener('DOMContentLoaded', function(){
     var banner = document.getElementById('cookieConsent');
     if (!banner) return;
     if (!(window.localStorage && localStorage.getItem('nexsky-consent'))) {
@@ -1610,7 +1610,7 @@
     var d = document.getElementById('cookieDecline');
     if (a) a.addEventListener('click', function(){ choose('granted'); });
     if (d) d.addEventListener('click', function(){ choose('denied'); });
-  })();
+  });
 
 </script>
 
