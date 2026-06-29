@@ -36,8 +36,15 @@
 </header>
 
 <main>
-  <div class="alloc-panel" id="allocPanel"><div class="lib-empty" style="padding:24px">Loading house view&hellip;</div></div>
-  <div class="alloc-panel" id="peerPanel"></div>
+  <div id="summaryBand"></div>
+
+  <div class="cio-tabs" id="cioTabs">
+    <button class="cio-tab active" data-view="scorecard">Scorecard</button>
+    <button class="cio-tab" data-view="peer">vs the Street</button>
+  </div>
+
+  <div id="scorecardView"><div class="lib-empty" style="padding:24px">Loading house view&hellip;</div></div>
+  <div id="peerView" hidden></div>
 
   <div class="section-head"><span class="section-num">02</span><span class="section-title">CIO notes</span></div>
   <div class="lib-grid" id="libGrid"><div class="lib-empty">Loading&hellip;</div></div>
@@ -50,46 +57,77 @@
 
 <script src="/members/library.js"></script>
 <script>
-  const ARROW = { '↑': 'up', '→': 'flat', '↓': 'down' };
+  const ARROWCLS = { '↑': 'd-up', '→': 'd-flat', '↓': 'd-down' };
+  const CAT_ORDER = ['Equities', 'Fixed income & credit', 'Alternatives & real assets', 'Commodities & FX'];
+  function catOf(c) {
+    if (/equit|EM & Asia/i.test(c)) return 'Equities';
+    if (/hedge|private|real estate|infrastructure|crypto/i.test(c)) return 'Alternatives & real assets';
+    if (/govt|credit|high yield|investment grade|EM debt/i.test(c)) return 'Fixed income & credit';
+    return 'Commodities & FX';
+  }
+  function dots(n) {
+    n = Math.max(0, Math.min(5, Number(n) || 0));
+    return '<span class="sc-dot-on">' + '●'.repeat(n) + '</span><span class="sc-dot-off">' + '●'.repeat(5 - n) + '</span>';
+  }
+  const ABBR = (t) => (t === 'pos' ? 'OW' : (t === 'neg' ? 'UW' : 'N'));
 
   (async () => {
-    const panel = document.getElementById('allocPanel');
     try {
       const r = await fetch('/members/allocation.json', { cache: 'no-cache' });
       if (!r.ok) throw new Error('HTTP ' + r.status);
       const d = await r.json();
 
-      const stars = (n) => '★★★★★'.slice(0, n) + '<span class="conv-dim">' + '★★★★★'.slice(n) + '</span>';
-      const dir = (a) => '<span class="dir ' + (ARROW[a] || 'flat') + '">' + (a || '→') + '</span>';
+      // Read-the-full-view button points at the latest CIO note
+      let readHref = '/members/research.html?type=cio';
+      try {
+        const lib = await loadLibrary();
+        const latest = lib.filter(x => x.type === 'cio').sort((a, b) => (a.date < b.date ? 1 : -1))[0];
+        if (latest) readHref = latest.url || '/members/article.html?slug=' + latest.slug;
+      } catch (e) {}
 
-      const rows = (d.scorecard || []).map((s) =>
-        '<tr>' +
-          '<td class="sc-class">' + esc(s.class) + '</td>' +
-          '<td class="sc-dir">' + dir(s.m3) + '</td>' +
-          '<td class="sc-dir">' + dir(s.m6) + '</td>' +
-          '<td class="sc-dir">' + dir(s.m12) + '</td>' +
-          '<td><span class="sc-stance ' + (s.tone || 'neu') + '">' + esc(s.stance) + '</span></td>' +
-          '<td class="sc-conv">' + stars(Number(s.conv) || 0) + '</td>' +
-          '<td class="sc-view">' + esc(s.view) + '</td>' +
-        '</tr>'
+      // Summary band
+      const chips = (d.scorecard || []).filter(s => s.conv >= 4)
+        .concat((d.scorecard || []).filter(s => s.tone === 'neg' && s.conv >= 3).slice(0, 1));
+      const chipHtml = chips.map(s =>
+        '<span class="cio-chip ' + (s.tone || 'neu') + '">' + esc(s.class) + ' &middot; ' + ABBR(s.tone) + ' ' + dots(s.conv) + '</span>'
       ).join('');
+      document.getElementById('summaryBand').innerHTML =
+        '<div class="cio-summary">' +
+          '<div class="cio-summary-top">' +
+            '<div class="cio-summary-stance"><div class="cio-summary-label">Stance &middot; ' + esc(d.version) + ' &middot; ' + esc(fmtDate(d.asOf)) + '</div>' + esc(d.stance) + '</div>' +
+            '<a class="cio-read-btn" href="' + readHref + '">Read the full house view &rarr;</a>' +
+          '</div>' +
+          '<div class="cio-chips">' + chipHtml + '</div>' +
+        '</div>';
 
-      panel.innerHTML =
-        '<div class="alloc-head">' +
-          '<span class="t">House view &middot; asset-class scorecard</span>' +
-          '<span class="meta">' + esc(d.version) + ' &middot; as of ' + esc(fmtDate(d.asOf)) + '</span>' +
-        '</div>' +
-        '<div class="alloc-sub">' +
-          '<div><strong>Stance.</strong> ' + esc(d.stance) + '</div>' +
-          '<div class="alloc-meta">Benchmark: ' + esc(d.benchmark) + ' &middot; Base currency: ' + esc(d.baseCurrency) + '</div>' +
-          '<div class="alloc-meta">' + esc(d.sources) + '</div>' +
-        '</div>' +
-        '<div class="sc-wrap"><table class="scorecard">' +
-          '<thead><tr><th>Asset class</th><th>3M</th><th>6M</th><th>12M</th><th>Stance vs SAA</th><th>Conviction</th><th class="sc-view">Our view vs the Street</th></tr></thead>' +
-          '<tbody>' + rows + '</tbody>' +
-        '</table></div>' +
-        '<div class="alloc-note">Direction is our read on the asset price over each horizon (up bullish, sideways neutral, down bearish); bond rows are stated on prices. Stance is against Strategic Asset Allocation v1.2. Conviction is 1 to 5 stars.</div>';
+      // Scorecard, grouped into category cards
+      const byCat = {};
+      CAT_ORDER.forEach(c => (byCat[c] = []));
+      (d.scorecard || []).forEach(s => { byCat[catOf(s.class)].push(s); });
+      const cards = CAT_ORDER.filter(c => byCat[c].length).map(cat => {
+        const items = byCat[cat].map(s =>
+          '<div class="sc-item">' +
+            '<div class="sc-item-head">' +
+              '<span class="sc-item-name">' + esc(s.class) + '</span>' +
+              '<span class="sc-item-right"><span class="sc-stance ' + (s.tone || 'neu') + '">' + esc(s.stance) + '</span><span class="sc-dots">' + dots(s.conv) + '</span></span>' +
+            '</div>' +
+            '<div class="sc-item-detail">' +
+              '<div class="sc-dirs">' +
+                '<span>3M <span class="' + (ARROWCLS[s.m3] || 'd-flat') + '">' + (s.m3 || '→') + '</span></span>' +
+                '<span>6M <span class="' + (ARROWCLS[s.m6] || 'd-flat') + '">' + (s.m6 || '→') + '</span></span>' +
+                '<span>12M <span class="' + (ARROWCLS[s.m12] || 'd-flat') + '">' + (s.m12 || '→') + '</span></span>' +
+              '</div>' +
+              '<div>' + esc(s.view) + '</div>' +
+            '</div>' +
+          '</div>'
+        ).join('');
+        return '<div class="sc-cat"><div class="sc-cat-h">' + esc(cat) + '</div>' + items + '</div>';
+      }).join('');
+      document.getElementById('scorecardView').innerHTML =
+        '<div class="sc-cats">' + cards + '</div>' +
+        '<div class="sc-hint">Tap any asset for the 3 / 6 / 12-month direction and our view versus the Street. Stance is against Strategic Asset Allocation v1.2; conviction is shown as 1 to 5 dots.</div>';
 
+      // Peer comparison (vs the Street)
       const pc = d.peerComparison;
       if (pc) {
         const cell = (v, self) => {
@@ -101,16 +139,30 @@
         ).join('') + '</tr>';
         const body = pc.classes.map(c =>
           '<tr><td class="sc-class">' + esc(c) + '</td>' +
-          pc.houses.map(h => cell((pc.stances[c] || {})[h.name], h.self)).join('') +
-          '</tr>'
+          pc.houses.map(h => cell((pc.stances[c] || {})[h.name], h.self)).join('') + '</tr>'
         ).join('');
-        document.getElementById('peerPanel').innerHTML =
-          '<div class="alloc-head"><span class="t">How the houses are positioned</span><span class="meta">NexSky vs the Street</span></div>' +
+        document.getElementById('peerView').innerHTML =
+          '<div class="alloc-panel"><div class="alloc-head"><span class="t">How the houses are positioned</span><span class="meta">NexSky vs the Street</span></div>' +
           '<div class="sc-wrap"><table class="scorecard peer-table"><thead>' + head + '</thead><tbody>' + body + '</tbody></table></div>' +
-          '<div class="alloc-note">' + esc(pc.note) + '</div>';
+          '<div class="alloc-note">' + esc(pc.note) + '</div></div>';
       }
+
+      // Expand / collapse rows
+      document.getElementById('scorecardView').addEventListener('click', (e) => {
+        const head = e.target.closest('.sc-item-head');
+        if (head) head.parentElement.classList.toggle('open');
+      });
+      // Tabs
+      document.getElementById('cioTabs').addEventListener('click', (e) => {
+        const b = e.target.closest('.cio-tab');
+        if (!b) return;
+        document.querySelectorAll('.cio-tab').forEach(t => t.classList.toggle('active', t === b));
+        const peer = b.dataset.view === 'peer';
+        document.getElementById('peerView').hidden = !peer;
+        document.getElementById('scorecardView').hidden = peer;
+      });
     } catch (e) {
-      panel.innerHTML = '<div class="lib-empty" style="padding:24px">House view unavailable right now.</div>';
+      document.getElementById('scorecardView').innerHTML = '<div class="lib-empty" style="padding:24px">House view unavailable right now.</div>';
     }
   })();
 
