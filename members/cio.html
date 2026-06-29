@@ -31,12 +31,13 @@
   <div class="page-header-inner">
     <div class="page-label">CIO House View</div>
     <h1 class="page-title">House view &amp; positioning</h1>
-    <p class="page-sub">Our strategic allocation, the current tactical tilts and changes, and how we sit against the major houses.</p>
+    <p class="page-sub">Our own conviction across asset classes, informed by UBS, Syz, Pictet, J.P. Morgan and Luccai, expressed against our strategic allocation. Updated monthly.</p>
   </div>
 </header>
 
 <main>
-  <div class="alloc-panel" id="allocPanel"><div class="lib-empty" style="padding:24px">Loading allocation&hellip;</div></div>
+  <div class="alloc-panel" id="allocPanel"><div class="lib-empty" style="padding:24px">Loading house view&hellip;</div></div>
+  <div class="alloc-panel" id="peerPanel"></div>
 
   <div class="section-head"><span class="section-num">02</span><span class="section-title">CIO notes</span></div>
   <div class="lib-grid" id="libGrid"><div class="lib-empty">Loading&hellip;</div></div>
@@ -49,8 +50,7 @@
 
 <script src="/members/library.js"></script>
 <script>
-  const STANCE_FULL = { OW: 'Overweight', N: 'Neutral', UW: 'Underweight' };
-  const CHG = { up: '&uarr; add', down: '&darr; trim', flat: '&ndash;' };
+  const ARROW = { '↑': 'up', '→': 'flat', '↓': 'down' };
 
   (async () => {
     const panel = document.getElementById('allocPanel');
@@ -59,38 +59,58 @@
       if (!r.ok) throw new Error('HTTP ' + r.status);
       const d = await r.json();
 
-      const rows = d.assetClasses.map(a =>
-        '<div class="alloc-row">' +
-          '<div class="alloc-name">' + esc(a.label) + '</div>' +
-          '<div class="alloc-bar"><span style="width:' + Number(a.saa) + '%"></span></div>' +
-          '<div><span class="stance ' + a.tilt + '">' + (STANCE_FULL[a.tilt] || a.tilt) + '</span></div>' +
-          '<div class="alloc-chg ' + a.change + '">' + (CHG[a.change] || '&ndash;') + '</div>' +
-        '</div>'
-      ).join('');
+      const stars = (n) => '★★★★★'.slice(0, n) + '<span class="conv-dim">' + '★★★★★'.slice(n) + '</span>';
+      const dir = (a) => '<span class="dir ' + (ARROW[a] || 'flat') + '">' + (a || '→') + '</span>';
 
-      const peers = d.peers || [];
-      const header = '<div class="ph"></div>' + peers.map((p, i) =>
-        '<div class="ph" style="color:' + (i === 0 ? '#1A1F3D' : '#6B7094') + '">' + esc(p) + '</div>'
+      const rows = (d.scorecard || []).map((s) =>
+        '<tr>' +
+          '<td class="sc-class">' + esc(s.class) + '</td>' +
+          '<td class="sc-dir">' + dir(s.m3) + '</td>' +
+          '<td class="sc-dir">' + dir(s.m6) + '</td>' +
+          '<td class="sc-dir">' + dir(s.m12) + '</td>' +
+          '<td><span class="sc-stance ' + (s.tone || 'neu') + '">' + esc(s.stance) + '</span></td>' +
+          '<td class="sc-conv">' + stars(Number(s.conv) || 0) + '</td>' +
+          '<td class="sc-view">' + esc(s.view) + '</td>' +
+        '</tr>'
       ).join('');
-      const body = d.assetClasses.map(a => {
-        const cells = peers.map(p => {
-          const s = (d.stances[a.key] || {})[p] || '';
-          return '<div class="peer-cell ' + s + '">' + s + '</div>';
-        }).join('');
-        return '<div class="rl">' + esc(a.label) + '</div>' + cells;
-      }).join('');
-      const cols = '150px repeat(' + peers.length + ', minmax(64px, 1fr))';
 
       panel.innerHTML =
-        '<div class="alloc-head"><span class="t">Asset allocation &middot; House view</span><span class="meta">As of ' + esc(fmtDate(d.asOf)) + '</span></div>' +
-        '<div class="alloc-sec"><div class="cap">Strategic weight &amp; tactical tilt</div>' + rows + '</div>' +
-        '<div class="alloc-sec"><div class="cap">How we compare &middot; major houses</div>' +
-          '<div class="peer-wrap"><div class="peer-grid" style="grid-template-columns:' + cols + '">' + header + body + '</div></div>' +
-          '<div class="alloc-note">OW overweight &middot; N neutral &middot; UW underweight. Peer stances as reported in each house\'s published monthly view.</div>' +
+        '<div class="alloc-head">' +
+          '<span class="t">House view &middot; asset-class scorecard</span>' +
+          '<span class="meta">' + esc(d.version) + ' &middot; as of ' + esc(fmtDate(d.asOf)) + '</span>' +
         '</div>' +
-        (d.commentary ? '<div class="alloc-commentary"><strong>This month:</strong> ' + esc(d.commentary) + '</div>' : '');
+        '<div class="alloc-sub">' +
+          '<div><strong>Stance.</strong> ' + esc(d.stance) + '</div>' +
+          '<div class="alloc-meta">Benchmark: ' + esc(d.benchmark) + ' &middot; Base currency: ' + esc(d.baseCurrency) + '</div>' +
+          '<div class="alloc-meta">' + esc(d.sources) + '</div>' +
+        '</div>' +
+        '<div class="sc-wrap"><table class="scorecard">' +
+          '<thead><tr><th>Asset class</th><th>3M</th><th>6M</th><th>12M</th><th>Stance vs SAA</th><th>Conviction</th><th class="sc-view">Our view vs the Street</th></tr></thead>' +
+          '<tbody>' + rows + '</tbody>' +
+        '</table></div>' +
+        '<div class="alloc-note">Direction is our read on the asset price over each horizon (up bullish, sideways neutral, down bearish); bond rows are stated on prices. Stance is against Strategic Asset Allocation v1.2. Conviction is 1 to 5 stars.</div>';
+
+      const pc = d.peerComparison;
+      if (pc) {
+        const cell = (v, self) => {
+          const t = v === 'OW' ? 'pos' : (v === 'UW' ? 'neg' : (v === 'N' ? 'neu' : 'na'));
+          return '<td class="pc-cell ' + t + (self ? ' pc-self-col' : '') + '">' + esc(v || 'n/a') + '</td>';
+        };
+        const head = '<tr><th>Asset class</th>' + pc.houses.map(h =>
+          '<th class="' + (h.self ? 'pc-self' : '') + '">' + esc(h.name) + '<span class="pc-date">' + esc(h.date) + '</span></th>'
+        ).join('') + '</tr>';
+        const body = pc.classes.map(c =>
+          '<tr><td class="sc-class">' + esc(c) + '</td>' +
+          pc.houses.map(h => cell((pc.stances[c] || {})[h.name], h.self)).join('') +
+          '</tr>'
+        ).join('');
+        document.getElementById('peerPanel').innerHTML =
+          '<div class="alloc-head"><span class="t">How the houses are positioned</span><span class="meta">NexSky vs the Street</span></div>' +
+          '<div class="sc-wrap"><table class="scorecard peer-table"><thead>' + head + '</thead><tbody>' + body + '</tbody></table></div>' +
+          '<div class="alloc-note">' + esc(pc.note) + '</div>';
+      }
     } catch (e) {
-      panel.innerHTML = '<div class="lib-empty" style="padding:24px">Allocation view unavailable right now.</div>';
+      panel.innerHTML = '<div class="lib-empty" style="padding:24px">House view unavailable right now.</div>';
     }
   })();
 

@@ -37,3 +37,27 @@ async function renderGrid(containerId, opts) {
     el.innerHTML = '<div class="lib-empty">Library unavailable right now.</div>';
   }
 }
+
+// Mobile nav: inject a hamburger toggle so the section menu is reachable on small screens.
+document.addEventListener('DOMContentLoaded', function () {
+  var nav = document.querySelector('.nav');
+  var center = document.querySelector('.nav-center');
+  if (!nav || !center || nav.querySelector('.nav-toggle')) return;
+  var logout = nav.querySelector('.nav-logout');
+  if (logout) {
+    var dl = document.createElement('a');
+    dl.href = logout.getAttribute('href');
+    dl.textContent = 'Sign out';
+    dl.className = 'nav-center-logout';
+    center.appendChild(dl);
+  }
+  var btn = document.createElement('button');
+  btn.className = 'nav-toggle';
+  btn.setAttribute('aria-label', 'Menu');
+  btn.innerHTML = '<span></span><span></span><span></span>';
+  nav.appendChild(btn);
+  btn.addEventListener('click', function () { center.classList.toggle('open'); });
+  center.querySelectorAll('a').forEach(function (a) {
+    a.addEventListener('click', function () { center.classList.remove('open'); });
+  });
+});

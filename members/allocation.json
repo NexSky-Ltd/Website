@@ -1,20 +1,55 @@
 {
   "asOf": "2026-06-28",
-  "note": "PLACEHOLDER DATA — replace tilts and peer stances with the live house view and each bank's latest published positioning.",
-  "assetClasses": [
-    { "key": "equities",     "label": "Equities",     "saa": 45, "tilt": "N",  "change": "down" },
-    { "key": "fixed_income", "label": "Fixed income", "saa": 30, "tilt": "OW", "change": "up" },
-    { "key": "alternatives", "label": "Alternatives", "saa": 15, "tilt": "OW", "change": "flat" },
-    { "key": "real_assets",  "label": "Real assets",  "saa": 5,  "tilt": "N",  "change": "flat" },
-    { "key": "cash",         "label": "Cash",         "saa": 5,  "tilt": "N",  "change": "flat" }
+  "version": "v1.3",
+  "benchmark": "Strategic Asset Allocation v1.2 (Growth, target CPI + 5%)",
+  "baseCurrency": "EUR",
+  "sources": "NexSky's own view, informed by UBS, Syz, Pictet, J.P. Morgan and Luccai plus family-office peer data. Not a consensus average.",
+  "stance": "Constructive but selective: risk-on equities with broadening away from US mega-cap, short duration, gold and quality as hedges, lean long the dollar.",
+  "scorecard": [
+    { "class": "US equities", "m3": "→", "m6": "↑", "m12": "↑", "stance": "Neutral", "tone": "neu", "conv": 3, "view": "Strong EPS and AI capex, offset by concentration and rich valuation. Below UBS (Attractive). Broaden, do not add to mega-cap." },
+    { "class": "European equities", "m3": "↑", "m6": "↑", "m12": "→", "stance": "Overweight", "tone": "pos", "conv": 3, "view": "ECB hawkishness supports banks and the euro, and the valuation gap is wide. More constructive than UBS (Neutral)." },
+    { "class": "Japanese equities", "m3": "↑", "m6": "↑", "m12": "→", "stance": "Overweight", "tone": "pos", "conv": 4, "view": "BoJ normalisation, record earnings, better governance, Topix and Nikkei at highs. Aligned with UBS and Syz. Watch the yen squeeze." },
+    { "class": "EM & Asia ex-Japan", "m3": "↑", "m6": "↑", "m12": "↑", "stance": "Overweight", "tone": "pos", "conv": 3, "view": "China policy stability and earnings, though a strong dollar is a headwind. Take EM in equity form, underweight EM local and FX (the Pictet barbell)." },
+    { "class": "Govt bonds — EUR", "m3": "↓", "m6": "→", "m12": "↑", "stance": "UW duration", "tone": "neg", "conv": 3, "view": "ECB hawkish, heavy supply, sticky inflation. With Syz and Pictet at underweight. Prefer the short end." },
+    { "class": "Govt bonds — US Treasuries", "m3": "↓", "m6": "→", "m12": "↑", "stance": "Reduce long", "tone": "neg", "conv": 3, "view": "Hawkish Fed and a flattening curve. The 5-year offers the best risk-reward. Belly for carry, reduce the long end. Against UBS Attractive." },
+    { "class": "Govt bonds — UK Gilts", "m3": "↓", "m6": "→", "m12": "→", "stance": "Reduce", "tone": "neg", "conv": 3, "view": "Fiscal tail under Burnham, long gilts above 5%, a wider gilt-Bund spread. Avoid; the risk premium is rising." },
+    { "class": "Credit — Investment Grade", "m3": "→", "m6": "→", "m12": "→", "stance": "Neutral", "tone": "neu", "conv": 2, "view": "Decent carry but spreads tight, around 80bps. Carry only." },
+    { "class": "Credit — High Yield", "m3": "→", "m6": "↓", "m12": "→", "stance": "Reduce", "tone": "neg", "conv": 3, "view": "Very tight spreads, around 300bps, late in the cycle. Not paid for the risk." },
+    { "class": "EM debt (hard & local)", "m3": "→", "m6": "↓", "m12": "→", "stance": "Reduce local", "tone": "neg", "conv": 3, "view": "A strong dollar pressures local and FX, while hard-currency carry is acceptable. The Pictet barbell." },
+    { "class": "Gold", "m3": "→", "m6": "↑", "m12": "↑", "stance": "Overweight (5%)", "tone": "pos", "conv": 4, "view": "Central-bank demand and a fiscal and geopolitical hedge, against a near-term dollar and real-yield headwind. Hold through dips." },
+    { "class": "Commodities — energy", "m3": "→", "m6": "→", "m12": "↑", "stance": "Neutral", "tone": "neu", "conv": 2, "view": "Hormuz reopened, so oil is soft, but the geopolitical optionality remains. Energy equity as a small tail hedge." },
+    { "class": "Commodities — metals", "m3": "→", "m6": "↑", "m12": "↑", "stance": "Neutral / OW", "tone": "pos", "conv": 3, "view": "Copper is structural on AI, power and electrification. We like copper, with UBS." },
+    { "class": "FX — EUR/USD (overlay)", "m3": "↓", "m6": "→", "m12": "→", "stance": "Long USD", "tone": "pos", "conv": 3, "view": "A rate-differential reversal and the DXY breakout above 100.6. Against UBS's EUR/USD 1.20 bullish-euro call." },
+    { "class": "FX — CHF & havens", "m3": "→", "m6": "→", "m12": "→", "stance": "Neutral", "tone": "neu", "conv": 2, "view": "The SNB at 0% caps appreciation, with a haven bid on Hormuz risk. A three-way split, kept small and flagged." },
+    { "class": "Hedge funds", "m3": "↑", "m6": "→", "m12": "→", "stance": "Neutral / OW", "tone": "pos", "conv": 3, "view": "High dispersion and range-bound rates reward macro, multi-strategy and low-net long-short." },
+    { "class": "Private equity & credit", "m3": "↑", "m6": "↑", "m12": "↑", "stance": "Overweight", "tone": "pos", "conv": 4, "view": "The core engine, deployed through commitment pacing. A structural overweight, with the SAA at 30% privates." },
+    { "class": "Real estate & infrastructure", "m3": "→", "m6": "↑", "m12": "↑", "stance": "Neutral / OW", "tone": "pos", "conv": 3, "view": "Logistics, data centres, residential, real-estate debt and energy-transition infrastructure. Selective." },
+    { "class": "Crypto (BTC & ETH)", "m3": "↓", "m6": "→", "m12": "→", "stance": "Reduce", "tone": "neg", "conv": 2, "view": "Bitcoin is in a bear market, down 28% year to date, with weak momentum. Reduce beyond the strategic 2%." }
   ],
-  "peers": ["NexSky", "UBS", "Pictet", "Citi", "JPMorgan", "BlackRock", "Goldman", "Morgan Stanley"],
-  "stances": {
-    "equities":     { "NexSky": "N",  "UBS": "OW", "Pictet": "N",  "Citi": "OW", "JPMorgan": "OW", "BlackRock": "OW", "Goldman": "OW", "Morgan Stanley": "N" },
-    "fixed_income": { "NexSky": "OW", "UBS": "N",  "Pictet": "OW", "Citi": "N",  "JPMorgan": "N",  "BlackRock": "N",  "Goldman": "N",  "Morgan Stanley": "OW" },
-    "alternatives": { "NexSky": "OW", "UBS": "OW", "Pictet": "OW", "Citi": "N",  "JPMorgan": "OW", "BlackRock": "N",  "Goldman": "N",  "Morgan Stanley": "OW" },
-    "real_assets":  { "NexSky": "N",  "UBS": "N",  "Pictet": "UW", "Citi": "N",  "JPMorgan": "N",  "BlackRock": "OW", "Goldman": "N",  "Morgan Stanley": "N" },
-    "cash":         { "NexSky": "N",  "UBS": "UW", "Pictet": "N",  "Citi": "UW", "JPMorgan": "UW", "BlackRock": "N",  "Goldman": "UW", "Morgan Stanley": "N" }
-  },
-  "commentary": "We add to high-grade duration and trim cyclical equity. Cash continues to earn its keep as dry powder for dislocations."
+  "peerComparison": {
+    "note": "OW overweight, N neutral, UW underweight, n/a not clearly published. Translated from each house's most recent published view; as-of date shown under each name. Some views are nuanced (UBS prefers short-duration bonds; BlackRock underweights long-dated IG). Sources: UBS House View, BlackRock Investment Institute, Morgan Stanley GIC, Citi Wealth, Goldman ISG, J.P. Morgan, Pictet.",
+    "classes": ["US equities", "European equities", "Japanese equities", "EM equities", "Govt bonds / duration", "IG credit", "High yield", "Gold", "US dollar", "Commodities"],
+    "houses": [
+      { "name": "NexSky", "date": "Jun 2026", "self": true },
+      { "name": "UBS", "date": "Jun 2026" },
+      { "name": "BlackRock", "date": "Jun 2026" },
+      { "name": "Morgan Stanley", "date": "Jun 2026" },
+      { "name": "Citi", "date": "Mar 2026" },
+      { "name": "Goldman", "date": "Jan 2026" },
+      { "name": "JPM", "date": "mid-2026" },
+      { "name": "Pictet", "date": "2026" }
+    ],
+    "stances": {
+      "US equities":           { "NexSky": "N",  "UBS": "OW", "BlackRock": "OW", "Morgan Stanley": "OW",  "Citi": "OW", "Goldman": "OW", "JPM": "OW", "Pictet": "n/a" },
+      "European equities":     { "NexSky": "OW", "UBS": "N",  "BlackRock": "N",  "Morgan Stanley": "n/a", "Citi": "OW", "Goldman": "n/a","JPM": "n/a","Pictet": "OW" },
+      "Japanese equities":     { "NexSky": "OW", "UBS": "OW", "BlackRock": "N",  "Morgan Stanley": "n/a", "Citi": "N",  "Goldman": "n/a","JPM": "n/a","Pictet": "n/a" },
+      "EM equities":           { "NexSky": "OW", "UBS": "OW", "BlackRock": "OW", "Morgan Stanley": "n/a", "Citi": "UW", "Goldman": "OW", "JPM": "OW", "Pictet": "OW" },
+      "Govt bonds / duration": { "NexSky": "UW", "UBS": "N",  "BlackRock": "UW", "Morgan Stanley": "UW",  "Citi": "UW", "Goldman": "UW", "JPM": "n/a","Pictet": "N" },
+      "IG credit":             { "NexSky": "N",  "UBS": "N",  "BlackRock": "N",  "Morgan Stanley": "UW",  "Citi": "N",  "Goldman": "n/a","JPM": "n/a","Pictet": "n/a" },
+      "High yield":            { "NexSky": "UW", "UBS": "N",  "BlackRock": "N",  "Morgan Stanley": "N",   "Citi": "UW", "Goldman": "n/a","JPM": "n/a","Pictet": "n/a" },
+      "Gold":                  { "NexSky": "OW", "UBS": "OW", "BlackRock": "UW", "Morgan Stanley": "n/a", "Citi": "OW", "Goldman": "UW", "JPM": "OW", "Pictet": "n/a" },
+      "US dollar":             { "NexSky": "OW", "UBS": "N",  "BlackRock": "N",  "Morgan Stanley": "n/a", "Citi": "n/a","Goldman": "N",  "JPM": "n/a","Pictet": "n/a" },
+      "Commodities":           { "NexSky": "N",  "UBS": "OW", "BlackRock": "n/a","Morgan Stanley": "N",   "Citi": "OW", "Goldman": "UW", "JPM": "n/a","Pictet": "n/a" }
+    }
+  }
 }
