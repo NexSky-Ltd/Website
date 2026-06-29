@@ -7,7 +7,7 @@
 <meta name="robots" content="noindex, nofollow">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231A1F3D'/%3E%3Ctext x='4' y='22' font-family='serif' font-size='18' fill='white'%3EN%3C/text%3E%3Ctext x='16' y='22' font-family='serif' font-size='18' fill='%23B8965A'%3ES%3C/text%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/members/portal.css?v=6">
+<link rel="stylesheet" href="/members/portal.css?v=7">
 </head>
 <body>
 
@@ -37,7 +37,7 @@
   <div>Private &amp; confidential &middot; For NexSky members only</div>
 </footer>
 
-<script src="/members/library.js?v=6"></script>
+<script src="/members/library.js?v=7"></script>
 <script>
   (async () => {
     const slug = new URLSearchParams(location.search).get('slug');
@@ -60,13 +60,30 @@
           '<div class="article-body">' +
             '<p class="opp-lead">' + esc(meta.summary || '') + '</p>' +
             '<div class="lib-actions" style="margin:22px 0 4px;">' + dl +
-              '<a class="lib-btn ghost" id="oppContact">Reach out for more information</a>' +
+              '<button type="button" class="lib-btn ghost" id="oppContact">Reach out for more information</button>' +
+            '</div>' +
+            '<div id="oppPanel" class="opp-contact" hidden>' +
+              'For more information, email us at <a class="opp-email" id="oppEmail" href="#">contact@nexsky.io</a>' +
+              '<button type="button" class="opp-copy" id="oppCopy">Copy</button>' +
+              '<span class="opp-copied" id="oppCopied" hidden>Copied to clipboard</span>' +
             '</div>' +
           '</div>';
-        // Set the mailto via DOM property so the &body= separator is not mangled
-        // by HTML attribute parsing (which silently broke the link before).
-        var c = document.getElementById('oppContact');
-        if (c) c.href = oppMailto(meta);
+        // mailto often has no handler (no result in some browsers), so the button
+        // reveals + copies the address; the link is a mailto fallback for those who have one.
+        var em = document.getElementById('oppEmail');
+        if (em) em.href = oppMailto(meta);
+        function copyAddr() {
+          var ok = document.getElementById('oppCopied');
+          try { navigator.clipboard.writeText('contact@nexsky.io'); if (ok) ok.hidden = false; } catch (e) {}
+        }
+        var btn = document.getElementById('oppContact');
+        if (btn) btn.addEventListener('click', function () {
+          var p = document.getElementById('oppPanel');
+          if (p) p.hidden = false;
+          copyAddr();
+        });
+        var cp = document.getElementById('oppCopy');
+        if (cp) cp.addEventListener('click', copyAddr);
         return;
       }
 
