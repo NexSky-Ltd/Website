@@ -31,7 +31,7 @@
   <div class="page-header-inner">
     <div class="page-label">CIO House View</div>
     <h1 class="page-title">House view &amp; positioning</h1>
-    <p class="page-sub">Our own conviction across asset classes, informed by UBS, Syz, Pictet, J.P. Morgan and Luccai, expressed against our strategic allocation. Updated monthly.</p>
+    <p class="page-sub">Our conviction across asset classes, built bottom-up from an aggregation of the world's leading banks and asset managers, and distilled through our own in-house research. Updated monthly.</p>
   </div>
 </header>
 
@@ -61,8 +61,8 @@
   const CAT_ORDER = ['Equities', 'Fixed income & credit', 'Alternatives & real assets', 'Commodities & FX'];
   function catOf(c) {
     if (/equit|EM & Asia/i.test(c)) return 'Equities';
-    if (/hedge|private|real estate|infrastructure|crypto/i.test(c)) return 'Alternatives & real assets';
-    if (/govt|credit|high yield|investment grade|EM debt/i.test(c)) return 'Fixed income & credit';
+    if (/hedge|real estate|infrastructure|crypto/i.test(c)) return 'Alternatives & real assets';
+    if (/govt|credit|high yield|investment grade|EM debt|private debt/i.test(c)) return 'Fixed income & credit';
     return 'Commodities & FX';
   }
   function dots(n) {
