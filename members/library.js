@@ -15,6 +15,7 @@ function esc(s) {
   return String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 }
 function cardHTML(it) {
+  if (it.type === 'opportunities') return oppCardHTML(it);
   const url = it.url || ('/members/article.html?slug=' + encodeURIComponent(it.slug));
   const cta = it.format === 'pdf' ? 'Open PDF &rarr;' : 'Read &rarr;';
   return `<a class="lib-card" href="${url}">
@@ -22,6 +23,23 @@ function cardHTML(it) {
     <div class="lib-title">${esc(it.title)}</div>
     <div class="lib-summary">${esc(it.summary)}</div>
     <span class="lib-cta">${cta}</span></a>`;
+}
+// Standard layout for all Opportunity cards: top-line description, a PDF teaser
+// download, and a Contact us button that opens an email to contact@nexsky.io.
+function oppCardHTML(it) {
+  const pdf = it.pdfUrl || (it.format === 'pdf' ? it.url : '');
+  const subject = encodeURIComponent('Enquiry: ' + (it.title || 'NexSky opportunity'));
+  const body = encodeURIComponent('I am a NexSky member and would like to learn more about the ' + (it.title || '') + ' opportunity.');
+  const mailto = 'mailto:contact@nexsky.io?subject=' + subject + '&body=' + body;
+  const dl = pdf
+    ? `<a class="lib-btn primary" href="${esc(pdf)}" target="_blank" rel="noopener">Download teaser (PDF)</a>`
+    : '';
+  return `<div class="lib-card opp-card">
+    <div class="lib-top"><span class="lib-tag">${esc(typeLabel(it.type))}</span><span class="lib-date">${esc(fmtDate(it.date))}</span></div>
+    <div class="lib-title">${esc(it.title)}</div>
+    <div class="lib-summary">${esc(it.summary)}</div>
+    <div class="lib-actions">${dl}<a class="lib-btn ghost" href="${mailto}">Contact us</a></div>
+  </div>`;
 }
 async function renderGrid(containerId, opts) {
   opts = opts || {};
