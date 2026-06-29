@@ -1,34 +1,19 @@
 [
   {
-    "slug": "2026-06-28-june-house-view",
+    "slug": "briefing-2026-06-29",
+    "type": "briefing",
+    "date": "2026-06-29",
+    "title": "NexSky Morning Briefing \u2014 Monday, 29 June 2026",
+    "summary": "Risk closed flat-to-soft on Friday: S&P 500 -0.05%, Nasdaq -0.24%, on hawkish PCE and an 8% weekly Nvidia slide. Overnight moves, the day ahead, and what we are watching.",
+    "format": "page",
+    "url": "/members/content/briefing-2026-06-29.html"
+  },
+  {
+    "slug": "2026-06-house-view",
     "type": "cio",
     "date": "2026-06-28",
-    "title": "June house view: leaning into quality duration",
-    "summary": "Monthly strategic stance and tactical tilts across the multi-asset book.",
-    "format": "reader"
-  },
-  {
-    "slug": "2026-06-27-morning-briefing",
-    "type": "briefing",
-    "date": "2026-06-27",
-    "title": "Morning briefing, Friday 27 June",
-    "summary": "Overnight moves, the day ahead, and what we are watching into the close.",
-    "format": "reader"
-  },
-  {
-    "slug": "2026-06-25-private-debt-coinvest",
-    "type": "opportunities",
-    "date": "2026-06-25",
-    "title": "Senior secured private debt, €20m co-investment",
-    "summary": "Indicative terms for a senior secured facility; co-investment open to members.",
-    "format": "reader"
-  },
-  {
-    "slug": "2026-06-19-ecb-euro-credit",
-    "type": "research",
-    "date": "2026-06-19",
-    "title": "What the ECB's June move means for euro credit",
-    "summary": "A short take on spreads, duration, and where we would add.",
+    "title": "House View \u2014 June 2026 (v1.3)",
+    "summary": "Our first CIO house view: four regimes, no single base case. Constructive equities with broadening, short duration, and gold and the dollar as hedges.",
     "format": "reader"
   }
 ]
