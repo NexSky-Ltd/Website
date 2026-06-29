@@ -27,28 +27,28 @@
     { "class": "Crypto (BTC & ETH)", "m3": "↓", "m6": "→", "m12": "→", "stance": "Reduce", "tone": "neg", "conv": 2, "view": "Bitcoin is in a bear market, down 28% year to date, with weak momentum. Reduce beyond the strategic 2%." }
   ],
   "peerComparison": {
-    "note": "OW overweight, N neutral, UW underweight, n/a not clearly published. Translated from each house's most recent published view; as-of date shown under each name. Some views are nuanced (UBS prefers short-duration bonds; BlackRock underweights long-dated IG). Sources: UBS House View, BlackRock Investment Institute, Morgan Stanley GIC, Citi Wealth, Goldman ISG, J.P. Morgan, Pictet.",
+    "note": "OW overweight, N neutral, UW underweight, n/a not clearly published. Translated from each house's most recent published view; as-of date shown under each name. The Goldman row is from the Jan 2026 ISG outlook (no fresh tactical update published since) and may be stale. Some views are nuanced (UBS prefers short-duration bonds and now expects a weaker dollar through 2026; Morgan Stanley is warming to high yield vs private credit; Pictet is trimming US for Europe and EM). Sources: UBS House View (Jun 2026), BlackRock Investment Institute Q2 2026, Morgan Stanley GIC Midyear 2026, Citi Wealth Q2 2026, Goldman ISG 2026 Outlook, J.P. Morgan Mid-Year Outlook 2026, Pictet 2026 barometers.",
     "classes": ["US equities", "European equities", "Japanese equities", "EM equities", "Govt bonds / duration", "IG credit", "High yield", "Gold", "US dollar", "Commodities"],
     "houses": [
       { "name": "NexSky", "date": "Jun 2026", "self": true },
       { "name": "UBS", "date": "Jun 2026" },
       { "name": "BlackRock", "date": "Jun 2026" },
       { "name": "Morgan Stanley", "date": "Jun 2026" },
-      { "name": "Citi", "date": "Mar 2026" },
+      { "name": "Citi", "date": "Q2 2026" },
       { "name": "Goldman", "date": "Jan 2026" },
-      { "name": "JPM", "date": "mid-2026" },
-      { "name": "Pictet", "date": "2026" }
+      { "name": "JPM", "date": "Jun 2026" },
+      { "name": "Pictet", "date": "Mar 2026" }
     ],
     "stances": {
-      "US equities":           { "NexSky": "N",  "UBS": "OW", "BlackRock": "OW", "Morgan Stanley": "OW",  "Citi": "OW", "Goldman": "OW", "JPM": "OW", "Pictet": "n/a" },
+      "US equities":           { "NexSky": "N",  "UBS": "OW", "BlackRock": "OW", "Morgan Stanley": "OW",  "Citi": "OW", "Goldman": "OW", "JPM": "OW", "Pictet": "UW" },
       "European equities":     { "NexSky": "OW", "UBS": "N",  "BlackRock": "N",  "Morgan Stanley": "n/a", "Citi": "OW", "Goldman": "n/a","JPM": "n/a","Pictet": "OW" },
-      "Japanese equities":     { "NexSky": "OW", "UBS": "OW", "BlackRock": "N",  "Morgan Stanley": "n/a", "Citi": "N",  "Goldman": "n/a","JPM": "n/a","Pictet": "n/a" },
+      "Japanese equities":     { "NexSky": "OW", "UBS": "OW", "BlackRock": "N",  "Morgan Stanley": "n/a", "Citi": "N",  "Goldman": "n/a","JPM": "OW", "Pictet": "n/a" },
       "EM equities":           { "NexSky": "OW", "UBS": "OW", "BlackRock": "OW", "Morgan Stanley": "n/a", "Citi": "UW", "Goldman": "OW", "JPM": "OW", "Pictet": "OW" },
       "Govt bonds / duration": { "NexSky": "UW", "UBS": "N",  "BlackRock": "UW", "Morgan Stanley": "UW",  "Citi": "UW", "Goldman": "UW", "JPM": "n/a","Pictet": "N" },
       "IG credit":             { "NexSky": "N",  "UBS": "N",  "BlackRock": "N",  "Morgan Stanley": "UW",  "Citi": "N",  "Goldman": "n/a","JPM": "n/a","Pictet": "n/a" },
       "High yield":            { "NexSky": "UW", "UBS": "N",  "BlackRock": "N",  "Morgan Stanley": "N",   "Citi": "UW", "Goldman": "n/a","JPM": "n/a","Pictet": "n/a" },
-      "Gold":                  { "NexSky": "OW", "UBS": "OW", "BlackRock": "UW", "Morgan Stanley": "n/a", "Citi": "OW", "Goldman": "UW", "JPM": "OW", "Pictet": "n/a" },
-      "US dollar":             { "NexSky": "OW", "UBS": "N",  "BlackRock": "N",  "Morgan Stanley": "n/a", "Citi": "n/a","Goldman": "N",  "JPM": "n/a","Pictet": "n/a" },
+      "Gold":                  { "NexSky": "OW", "UBS": "OW", "BlackRock": "UW", "Morgan Stanley": "n/a", "Citi": "OW", "Goldman": "UW", "JPM": "OW", "Pictet": "OW" },
+      "US dollar":             { "NexSky": "OW", "UBS": "UW", "BlackRock": "N",  "Morgan Stanley": "n/a", "Citi": "n/a","Goldman": "N",  "JPM": "n/a","Pictet": "n/a" },
       "Commodities":           { "NexSky": "N",  "UBS": "OW", "BlackRock": "n/a","Morgan Stanley": "N",   "Citi": "OW", "Goldman": "UW", "JPM": "n/a","Pictet": "n/a" }
     }
   }
