@@ -1,13 +1,5 @@
 [
   {
-    "slug": "pipeline-test-delete-me",
-    "type": "research",
-    "date": "2026-06-29",
-    "title": "Pipeline test — safe to delete",
-    "summary": "End-to-end publish test from cowork. Safe to delete.",
-    "format": "reader"
-  },
-  {
     "slug": "briefing-2026-06-29",
     "type": "briefing",
     "date": "2026-06-29",
