@@ -7,7 +7,7 @@
 <meta name="robots" content="noindex, nofollow">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231A1F3D'/%3E%3Ctext x='4' y='22' font-family='serif' font-size='18' fill='white'%3EN%3C/text%3E%3Ctext x='16' y='22' font-family='serif' font-size='18' fill='%23B8965A'%3ES%3C/text%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/members/portal.css?v=4">
+<link rel="stylesheet" href="/members/portal.css?v=5">
 </head>
 <body>
 
@@ -37,7 +37,7 @@
   <div>Private &amp; confidential &middot; For NexSky members only</div>
 </footer>
 
-<script src="/members/library.js?v=4"></script>
+<script src="/members/library.js?v=5"></script>
 <script>
   (async () => {
     const slug = new URLSearchParams(location.search).get('slug');
@@ -46,9 +46,29 @@
     try {
       const items = await loadLibrary();
       const meta = items.find(i => i.slug === slug) || {};
+      document.title = 'NexSky — ' + (meta.title || 'Members');
+
+      // Opportunities have no content fragment; render a standard detail page:
+      // summary, an embedded teaser, and download + reach-out actions.
+      if (meta.type === 'opportunities') {
+        const pdf = meta.pdfUrl || (meta.format === 'pdf' ? meta.url : '');
+        const dl = pdf ? '<a class="lib-btn primary" href="' + esc(pdf) + '" target="_blank" rel="noopener">Download teaser (PDF)</a>' : '';
+        el.innerHTML =
+          '<div class="article-tag">' + esc(typeLabel(meta.type)) + '</div>' +
+          '<h1>' + esc(meta.title || slug) + '</h1>' +
+          '<div class="article-meta">' + esc(fmtDate(meta.date || '')) + ' &middot; NexSky</div>' +
+          '<div class="article-body">' +
+            '<p class="opp-lead">' + esc(meta.summary || '') + '</p>' +
+            '<div class="lib-actions" style="margin:22px 0 4px;">' + dl +
+              '<a class="lib-btn ghost" href="' + oppMailto(meta) + '">Reach out for more information</a>' +
+            '</div>' +
+            (pdf ? '<iframe class="opp-pdf" src="' + esc(pdf) + '#view=FitH" title="Teaser"></iframe>' : '') +
+          '</div>';
+        return;
+      }
+
       const res = await fetch('/members/content/' + slug + '.html', { cache: 'no-cache' });
       const body = res.ok ? await res.text() : '<p>This piece is not available.</p>';
-      document.title = 'NexSky — ' + (meta.title || 'Members');
       // Standard PDF download button. CIO letters resolve their PDF by convention
       // (/members/files/<slug>.pdf); any item may also set meta.pdfUrl explicitly.
       const pdfUrl = meta.pdfUrl || (meta.type === 'cio' ? '/members/files/' + slug + '.pdf' : '');
