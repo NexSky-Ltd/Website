@@ -68,7 +68,12 @@ main{padding:40px;max-width:1400px;margin:0 auto;}
 .opp-card .lib-top,.opp-card .lib-title,.opp-card .lib-summary{position:relative;z-index:0;}
 .opp-card .lib-actions{position:relative;z-index:2;}
 .opp-lead{font-size:16px;line-height:1.6;color:var(--midnight);}
-.opp-pdf{width:100%;height:78vh;border:1px solid rgba(0,0,0,0.10);border-radius:8px;margin-top:10px;background:#fff;}
+.opp-contact{display:flex;align-items:center;flex-wrap:wrap;gap:12px;margin-top:8px;padding:14px 18px;background:var(--cream);border-left:3px solid var(--gold);border-radius:8px;font-size:14px;color:var(--midnight);}
+.opp-email{color:var(--gold-dark);font-weight:600;text-decoration:none;}
+.opp-email:hover{text-decoration:underline;}
+.opp-copy{font-size:11px;letter-spacing:1px;text-transform:uppercase;font-weight:600;color:var(--midnight);background:#fff;border:1px solid rgba(26,31,61,0.18);border-radius:4px;padding:6px 12px;cursor:pointer;transition:all .2s;}
+.opp-copy:hover{border-color:var(--gold);color:var(--gold-dark);}
+.opp-copied{font-size:12px;color:var(--gold-dark);}
 .lib-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:auto;}
 .lib-btn{display:inline-flex;align-items:center;justify-content:center;padding:10px 16px;border-radius:4px;font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;text-decoration:none;transition:all .2s;}
 .lib-btn.primary{background:var(--gold);color:var(--midnight);}
