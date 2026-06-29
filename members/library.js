@@ -1,6 +1,7 @@
 // NexSky members — shared library helpers (hub, research, article)
 async function loadLibrary() {
-  const r = await fetch('/members/library.json', { cache: 'no-cache' });
+  // Cache-bust so a newly published library.json is never masked by an edge/CDN cache.
+  const r = await fetch('/members/library.json?t=' + Date.now(), { cache: 'no-cache' });
   if (!r.ok) throw new Error('HTTP ' + r.status);
   return r.json();
 }
