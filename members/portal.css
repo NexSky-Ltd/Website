@@ -63,8 +63,12 @@ main{padding:40px;max-width:1400px;margin:0 auto;}
 .lib-title{font-family:'DM Serif Display',serif;font-size:18px;color:var(--midnight);line-height:1.3;margin-bottom:8px;}
 .lib-summary{font-size:13px;color:var(--text-secondary);line-height:1.6;flex:1;margin-bottom:14px;}
 .lib-cta{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--midnight);font-weight:600;}
-.opp-card{cursor:default;}
-.opp-card:hover{transform:none;box-shadow:0 6px 22px rgba(26,31,61,0.07);}
+.opp-card{position:relative;}
+.opp-stretch{position:absolute;inset:0;z-index:1;border-radius:8px;}
+.opp-card .lib-top,.opp-card .lib-title,.opp-card .lib-summary{position:relative;z-index:0;}
+.opp-card .lib-actions{position:relative;z-index:2;}
+.opp-lead{font-size:16px;line-height:1.6;color:var(--midnight);}
+.opp-pdf{width:100%;height:78vh;border:1px solid rgba(0,0,0,0.10);border-radius:8px;margin-top:10px;background:#fff;}
 .lib-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:auto;}
 .lib-btn{display:inline-flex;align-items:center;justify-content:center;padding:10px 16px;border-radius:4px;font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;text-decoration:none;transition:all .2s;}
 .lib-btn.primary{background:var(--gold);color:var(--midnight);}
