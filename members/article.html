@@ -59,31 +59,8 @@
           '<div class="article-meta">' + esc(fmtDate(meta.date || '')) + ' &middot; NexSky</div>' +
           '<div class="article-body">' +
             '<p class="opp-lead">' + esc(meta.summary || '') + '</p>' +
-            '<div class="lib-actions" style="margin:22px 0 4px;">' + dl +
-              '<button type="button" class="lib-btn ghost" id="oppContact">Reach out for more information</button>' +
-            '</div>' +
-            '<div id="oppPanel" class="opp-contact" hidden>' +
-              'For more information, email us at <a class="opp-email" id="oppEmail" href="#">contact@nexsky.io</a>' +
-              '<button type="button" class="opp-copy" id="oppCopy">Copy</button>' +
-              '<span class="opp-copied" id="oppCopied" hidden>Copied to clipboard</span>' +
-            '</div>' +
+            (dl ? '<div class="lib-actions" style="margin:22px 0 4px;">' + dl + '</div>' : '') +
           '</div>';
-        // mailto often has no handler (no result in some browsers), so the button
-        // reveals + copies the address; the link is a mailto fallback for those who have one.
-        var em = document.getElementById('oppEmail');
-        if (em) em.href = oppMailto(meta);
-        function copyAddr() {
-          var ok = document.getElementById('oppCopied');
-          try { navigator.clipboard.writeText('contact@nexsky.io'); if (ok) ok.hidden = false; } catch (e) {}
-        }
-        var btn = document.getElementById('oppContact');
-        if (btn) btn.addEventListener('click', function () {
-          var p = document.getElementById('oppPanel');
-          if (p) p.hidden = false;
-          copyAddr();
-        });
-        var cp = document.getElementById('oppCopy');
-        if (cp) cp.addEventListener('click', copyAddr);
         return;
       }
 
