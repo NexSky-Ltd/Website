@@ -49,10 +49,17 @@
       const res = await fetch('/members/content/' + slug + '.html', { cache: 'no-cache' });
       const body = res.ok ? await res.text() : '<p>This piece is not available.</p>';
       document.title = 'NexSky — ' + (meta.title || 'Members');
+      // Standard PDF download button. CIO letters resolve their PDF by convention
+      // (/members/files/<slug>.pdf); any item may also set meta.pdfUrl explicitly.
+      const pdfUrl = meta.pdfUrl || (meta.type === 'cio' ? '/members/files/' + slug + '.pdf' : '');
+      const pdfBtn = pdfUrl
+        ? '<a class="lib-btn primary" href="' + esc(pdfUrl) + '" target="_blank" rel="noopener" style="display:inline-block;margin:16px 0 6px;">Download PDF &darr;</a>'
+        : '';
       el.innerHTML =
         '<div class="article-tag">' + esc(typeLabel(meta.type || '')) + '</div>' +
         '<h1>' + esc(meta.title || slug) + '</h1>' +
         '<div class="article-meta">' + esc(fmtDate(meta.date || '')) + ' &middot; NexSky</div>' +
+        pdfBtn +
         '<div class="article-body">' + body + '</div>';
     } catch (e) {
       el.innerHTML = '<div class="lib-empty">Unable to load this piece.</div>';
