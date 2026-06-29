@@ -31,9 +31,9 @@ function oppMailto(it) {
   const body = encodeURIComponent('I am a NexSky member and would like to learn more about the ' + (it.title || '') + ' opportunity.');
   return 'mailto:contact@nexsky.io?subject=' + subject + '&body=' + body;
 }
-// Standard layout for all Opportunity cards: top-line description, a PDF teaser
-// download, and a Contact us button. The whole card also links through to a detail
-// page (article.html) that carries the full summary and an embedded teaser.
+// Standard layout for all Opportunity cards: top-line description and a PDF teaser
+// download. The whole card links through to a detail page (article.html) that
+// carries the full summary and the single "Reach out" contact action.
 function oppCardHTML(it) {
   const detail = '/members/article.html?slug=' + encodeURIComponent(it.slug);
   const pdf = it.pdfUrl || (it.format === 'pdf' ? it.url : '');
@@ -45,7 +45,7 @@ function oppCardHTML(it) {
     <div class="lib-top"><span class="lib-tag">${esc(typeLabel(it.type))}</span><span class="lib-date">${esc(fmtDate(it.date))}</span></div>
     <div class="lib-title">${esc(it.title)}</div>
     <div class="lib-summary">${esc(it.summary)}</div>
-    <div class="lib-actions">${dl}<a class="lib-btn ghost" href="${oppMailto(it)}">Contact us</a></div>
+    <div class="lib-actions">${dl}</div>
   </div>`;
 }
 async function renderGrid(containerId, opts) {
