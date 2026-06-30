@@ -158,7 +158,7 @@
         document.getElementById('todayKicker').textContent = 'Daily briefing · ' + fmtDate(brief.date);
         document.getElementById('todayTitle').textContent = brief.title;
         document.getElementById('todaySum').textContent = brief.summary || '';
-        var heads = [['US equities','US equities'],['European equities','Europe'],['Japanese equities','Japan'],['Govt bonds — EUR','Duration EUR'],['Gold','Gold']];
+        var heads = [['US equities','US equities'],['European equities','European equities'],['Japanese equities','Japanese equities'],['Govt bonds — EUR','Duration (EUR)'],['Gold','Gold'],['Commodities — energy','Brent crude']];
         document.getElementById('todayViews').innerHTML = heads.map(function (h) {
           var s = sc.find(function (x) { return x.class === h[0]; });
           if (!s) return '';
