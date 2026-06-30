@@ -123,13 +123,23 @@ async function renderTicker() {
       if (it.id === 'em') return v.toFixed(1);
       return v.toLocaleString('en-US', { maximumFractionDigits: v > 1000 ? 0 : 2 });
     }
+    function fmtNum(v, dec) { return v.toLocaleString('en-US', { minimumFractionDigits: dec, maximumFractionDigits: dec }); }
+    function decimalsFor(it, cat) {
+      if (cat === 'fx') return it.id === 'eurusd' ? 4 : 2;
+      if (it.id === 'em') return 2;
+      return Math.abs(it.level) >= 1000 ? 0 : 2;
+    }
     function cell(p) {
-      var it = p.it, r1 = (it.returns || {})['1d'], chg = '';
+      var it = p.it, cat = p.cat, r1 = (it.returns || {})['1d'];
+      var line3 = '<div class="mk-chg muted">—</div>';
       if (typeof r1 === 'number') {
-        var up = r1 >= 0;
-        chg = '<span class="mk-chg ' + (up ? 'up' : 'dn') + '">' + (up ? '▲' : '▼') + ' ' + Math.abs(r1 * 100).toFixed(2) + '%</span>';
+        var up = r1 >= 0, dec = decimalsFor(it, cat);
+        var abs = it.level * r1 / (1 + r1);
+        var absStr = (abs >= 0 ? '+' : '-') + fmtNum(Math.abs(abs), dec);
+        var pctStr = (up ? '+' : '-') + Math.abs(r1 * 100).toFixed(2) + '%';
+        line3 = '<div class="mk-chg ' + (up ? 'up' : 'dn') + '">' + absStr + ' (' + pctStr + ')</div>';
       }
-      return '<span class="mk-item"><span class="mk-name">' + esc(it.name) + '</span><span class="mk-lvl">' + lvl(it, p.cat) + '</span>' + chg + '</span>';
+      return '<div class="mk-item"><div class="mk-name">' + esc(it.name) + '</div><div class="mk-lvl">' + lvl(it, cat) + '</div>' + line3 + '</div>';
     }
     var html = pick.map(cell).join('');
     track.innerHTML = '<div class="mkt-seq">' + html + '</div><div class="mkt-seq" aria-hidden="true">' + html + '</div>';
