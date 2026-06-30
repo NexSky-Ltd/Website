@@ -25,6 +25,9 @@
     --neg: #c9242a;
   }
 
+  /* === YOUR WORKER URL — edit this after deploy === */
+  /* Set via <script> below too, keeping one source of truth */
+
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
@@ -178,7 +181,6 @@
     .nav { padding: 0 20px; }
     .nav-right { gap: 10px; }
     .nav-user { display: none; }
-    .desk-nav-links { display: none; }
     .desk-header { padding: 28px 20px 16px; }
     .tape-wrap { padding: 0 20px 8px; }
     main { padding: 24px 20px; }
@@ -192,16 +194,8 @@
 
 <nav class="nav">
   <div class="nav-left">
-    <a href="/members/" class="nav-wordmark">Nex<span class="sky">Sky</span></a>
+    <a href="/" class="nav-wordmark">Nex<span class="sky">Sky</span></a>
     <span class="nav-badge">Members</span>
-    <span class="desk-nav-links" style="display:flex;gap:16px;margin-left:8px;">
-      <a href="/members/" style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--stone);text-decoration:none;">Hub</a>
-      <a href="/members/cio.html" style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--stone);text-decoration:none;">CIO</a>
-      <a href="/members/research.html?type=briefing" style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--stone);text-decoration:none;">Daily Briefing</a>
-      <a href="/members.html" style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);text-decoration:none;">Live Market</a>
-      <a href="/members/research.html?type=opportunities" style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--stone);text-decoration:none;">Opportunities</a>
-      <a href="/members/research.html?type=research" style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--stone);text-decoration:none;">Research</a>
-    </span>
   </div>
   <div class="nav-right">
     <span class="nav-user"><span class="label">Signed in</span><span id="userEmail">—</span></span>
@@ -211,7 +205,7 @@
 
 <header class="desk-header">
   <div class="desk-header-inner">
-    <div class="desk-label">Live Market</div>
+    <div class="desk-label">Market Desk</div>
     <h1 class="desk-title">Global markets, live.</h1>
     <p class="desk-sub">Cross-asset heatmap with selectable time horizons. Sector deep-dive for US and Europe. Live chart and calendar below.</p>
   </div>
@@ -226,9 +220,9 @@
       "symbols": [
         {"proName":"FOREXCOM:SPXUSD","title":"S&P 500"},
         {"proName":"FOREXCOM:NSXUSD","title":"Nasdaq 100"},
-        {"proName":"TVC:SX5E","title":"Euro Stoxx 50"},
-        {"proName":"TVC:NI225","title":"Nikkei 225"},
-        {"proName":"TVC:HSI","title":"Hang Seng"},
+        {"proName":"INDEX:STOXX50E","title":"Euro Stoxx 50"},
+        {"proName":"INDEX:NKY","title":"Nikkei 225"},
+        {"proName":"INDEX:HSI","title":"Hang Seng"},
         {"proName":"TVC:DXY","title":"DXY"},
         {"proName":"FX:EURUSD","title":"EUR/USD"},
         {"proName":"FX:USDJPY","title":"USD/JPY"},
@@ -238,7 +232,7 @@
         {"proName":"TVC:UKOIL","title":"Brent"},
         {"proName":"BITSTAMP:BTCUSD","title":"BTC"},
         {"proName":"BITSTAMP:ETHUSD","title":"ETH"},
-        {"proName":"TVC:VIX","title":"VIX"}
+        {"proName":"CBOE:VIX","title":"VIX"}
       ],
       "showSymbolLogo": false, "isTransparent": true, "displayMode": "adaptive", "colorTheme": "dark", "locale": "en"
     }
@@ -280,7 +274,7 @@
     <div class="section-head">
       <span class="section-num">02</span>
       <h2 class="section-title">Equity sectors — US &amp; Europe</h2>
-      <span class="section-sub">Sector summary tiles on top, full market heatmap below</span>
+      <span class="section-sub">Summary tiles on top, drill-down treemaps below</span>
     </div>
 
     <div class="horizon-toggle" id="sectorToggle">
@@ -305,30 +299,59 @@
     </div>
 
     <div style="margin-top: 28px">
-      <div class="panel">
-        <div class="panel-head">Market heatmap <span class="meta">S&amp;P 500 default · switch index in the toolbar · sized by market cap, coloured by 1D</span></div>
-        <div class="panel-body">
-          <div class="tradingview-widget-container">
-            <div class="tradingview-widget-container__widget"></div>
-            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-stock-heatmap.js" async>
-            {
-              "exchanges": [],
-              "dataSource": "SPX500",
-              "grouping": "sector",
-              "blockSize": "market_cap_basic",
-              "blockColor": "change",
-              "locale": "en",
-              "symbolUrl": "",
-              "colorTheme": "light",
-              "hasTopBar": true,
-              "isDataSetEnabled": true,
-              "isZoomEnabled": true,
-              "hasSymbolTooltip": true,
-              "isMonoSize": false,
-              "width": "100%",
-              "height": 720
-            }
-            </script>
+      <div class="sector-split">
+        <div class="panel">
+          <div class="panel-head">US heatmap — S&amp;P 500 <span class="meta">sized by market cap, colored by 1D</span></div>
+          <div class="panel-body">
+            <div class="tradingview-widget-container">
+              <div class="tradingview-widget-container__widget"></div>
+              <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-stock-heatmap.js" async>
+              {
+                "exchanges": [],
+                "dataSource": "SPX500",
+                "grouping": "sector",
+                "blockSize": "market_cap_basic",
+                "blockColor": "change",
+                "locale": "en",
+                "symbolUrl": "",
+                "colorTheme": "light",
+                "hasTopBar": true,
+                "isDataSetEnabled": true,
+                "isZoomEnabled": true,
+                "hasSymbolTooltip": true,
+                "isMonoSize": false,
+                "width": "100%",
+                "height": 880
+              }
+              </script>
+            </div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-head">EU heatmap — Euro Stoxx 50 <span class="meta">sized by market cap, colored by 1D</span></div>
+          <div class="panel-body">
+            <div class="tradingview-widget-container">
+              <div class="tradingview-widget-container__widget"></div>
+              <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-stock-heatmap.js" async>
+              {
+                "exchanges": [],
+                "dataSource": "SX5E",
+                "grouping": "sector",
+                "blockSize": "market_cap_basic",
+                "blockColor": "change",
+                "locale": "en",
+                "symbolUrl": "",
+                "colorTheme": "light",
+                "hasTopBar": true,
+                "isDataSetEnabled": true,
+                "isZoomEnabled": true,
+                "hasSymbolTooltip": true,
+                "isMonoSize": false,
+                "width": "100%",
+                "height": 880
+              }
+              </script>
+            </div>
           </div>
         </div>
       </div>
@@ -340,24 +363,39 @@
     <div class="section-head">
       <span class="section-num">03</span>
       <h2 class="section-title">Focus chart</h2>
-      <span class="section-sub">Change ticker via the search box in the chart</span>
+      <span class="section-sub">Switch ticker via the search box</span>
     </div>
-    <div class="panel">
-      <div class="panel-head">Advanced chart <span class="meta">S&amp;P 500 default · search any ticker · MA &amp; technical rating follow the symbol</span></div>
-      <div class="panel-body">
-        <div class="tradingview-widget-container" style="height:700px">
-          <div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div>
-          <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
-          {
-            "width": "100%", "height": 700,
-            "symbol": "FOREXCOM:SPXUSD", "interval": "D", "timezone": "Europe/Brussels",
-            "theme": "light", "style": "1", "locale": "en", "toolbar_bg": "#f5f1ec",
-            "enable_publishing": false, "allow_symbol_change": true, "hide_side_toolbar": false,
-            "withdateranges": true, "details": false,
-            "studies": ["STD;MA_Cross", "STD;Technical%1Rating"], "calendar": false,
-            "support_host": "https://www.tradingview.com"
-          }
-          </script>
+    <div class="grid-2">
+      <div class="panel">
+        <div class="panel-head">Advanced chart <span class="meta">S&amp;P 500 · default</span></div>
+        <div class="panel-body">
+          <div class="tradingview-widget-container" style="height:520px">
+            <div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+            {
+              "autosize": true, "symbol": "FOREXCOM:SPXUSD", "interval": "D", "timezone": "Europe/Brussels",
+              "theme": "light", "style": "2", "locale": "en", "toolbar_bg": "#f5f1ec",
+              "enable_publishing": false, "allow_symbol_change": true,
+              "studies": ["STD;MA_Cross", "STD;RSI"], "calendar": false,
+              "support_host": "https://www.tradingview.com"
+            }
+            </script>
+          </div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-head">Technicals <span class="meta">1D · default SPX</span></div>
+        <div class="panel-body">
+          <div class="tradingview-widget-container" style="height:520px">
+            <div class="tradingview-widget-container__widget"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
+            {
+              "interval": "1D", "width": "100%", "height": "100%", "isTransparent": false,
+              "symbol": "FOREXCOM:SPXUSD", "showIntervalTabs": true, "displayMode": "single",
+              "locale": "en", "colorTheme": "light"
+            }
+            </script>
+          </div>
         </div>
       </div>
     </div>
@@ -391,6 +429,7 @@
 <footer class="footer">
   <div class="gold-line"></div>
   <div class="footer-wordmark">Nex<span class="sky">Sky</span></div>
+  <div>On your side. By design.</div>
   <div class="footer-note">
     Data is delivered on a best-efforts basis. Yields and OAS spreads via FRED (St. Louis Fed) and the ECB Statistical Data Warehouse. Equities, commodities, crypto via Yahoo Finance.
     TradingView powers live charts. Nothing here constitutes investment advice. &copy; 2026 NexSky.
