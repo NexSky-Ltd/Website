@@ -1,9 +1,18 @@
 [
   {
+    "slug": "bridgewater-place-bridge",
+    "type": "opportunities",
+    "date": "2026-06-24",
+    "title": "Bridgewater Place \u2014 senior secured bridge loan",
+    "summary": "Opportunity to provide a c. GBP 26m senior secured bridge (6 + 3 months, 70 to 73% LTV) against Bridgewater Place, a 251,834 sq ft Grade A office tower in Leeds city centre. The bridge refinances the existing Barclays facility and repays the noteholder, leaving the asset unencumbered with runway to progress lettings and a comprehensive repositioning. Take-out via sale or a GBP 56.5 to 65m senior term facility.",
+    "format": "pdf",
+    "pdfUrl": "/members/files/bridgewater-place-bridge-teaser.pdf"
+  },
+  {
     "slug": "briefing-2026-06-30",
     "type": "briefing",
     "date": "2026-06-30",
-    "title": "NexSky Morning Briefing — Tuesday, 30 June 2026",
+    "title": "NexSky Morning Briefing \u2014 Tuesday, 30 June 2026",
     "summary": "Nasdaq closed +2.06% at 25,820 Monday, leading a broad risk-on session; S&P 500 settled +1.18% at 7,440 with UST 10Y unchanged at 4.38% and 2s10s at +28bp. Today's pivot points are NKE FQ4 earnings (results ~22:15 CET, consensus USD 10.85B ",
     "format": "page",
     "url": "/members/content/briefing-2026-06-30.html"
@@ -12,7 +21,7 @@
     "slug": "briefing-2026-06-29",
     "type": "briefing",
     "date": "2026-06-29",
-    "title": "NexSky Morning Briefing — Monday, 29 June 2026",
+    "title": "NexSky Morning Briefing \u2014 Monday, 29 June 2026",
     "summary": "Risk closed flat-to-soft on Friday: S&P 500 -0.05%, Nasdaq -0.24%, on hawkish PCE and an 8% weekly Nvidia slide. Overnight moves, the day ahead, and what we are watching.",
     "format": "page",
     "url": "/members/content/briefing-2026-06-29.html"
@@ -21,7 +30,7 @@
     "slug": "2026-06-house-view",
     "type": "cio",
     "date": "2026-06-28",
-    "title": "House View — June 2026 (v1.3)",
+    "title": "House View \u2014 June 2026 (v1.3)",
     "summary": "Our first CIO house view: four regimes, no single base case. Constructive equities with broadening, short duration, and gold and the dollar as hedges.",
     "format": "reader"
   },
@@ -29,7 +38,7 @@
     "slug": "1x-technologies-secondary",
     "type": "opportunities",
     "date": "2026-05-04",
-    "title": "1X Technologies — secondary share sale",
+    "title": "1X Technologies \u2014 secondary share sale",
     "summary": "Secondary opportunity to acquire up to USD 60m of shares in 1X Technologies, a late-stage humanoid robotics platform backed by OpenAI, EQT Ventures, Tiger Global and Samsung NEXT, at a c. 70% discount to the ongoing Series C (c. USD 10bn reference valuation).",
     "format": "pdf",
     "pdfUrl": "/members/files/1x-technologies-teaser.pdf"
