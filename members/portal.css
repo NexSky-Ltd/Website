@@ -22,7 +22,7 @@ body{font-family:'Inter',sans-serif;background:var(--off-white);color:var(--text
 .nav-center-logout{display:none;}
 
 /* HEADER */
-.page-header{margin-top:112px;padding:48px 40px 30px;background:var(--midnight);color:#fff;}
+.page-header{margin-top:136px;padding:48px 40px 30px;background:var(--midnight);color:#fff;}
 .page-header-inner{max-width:1400px;margin:0 auto;}
 .page-label{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
 .page-title{font-family:'DM Serif Display',serif;font-size:clamp(28px,4vw,40px);color:#fff;letter-spacing:-0.5px;margin-bottom:6px;}
@@ -243,19 +243,20 @@ td.sc-view,th.sc-view{font-size:12px;color:var(--text-secondary);line-height:1.5
 
 
 /* ===== PERSISTENT MARKET TICKER ===== */
-.mkt-ticker{position:fixed;top:72px;left:0;right:0;height:40px;z-index:999;background:var(--midnight);border-bottom:1px solid rgba(184,150,90,0.18);overflow:hidden;display:flex;align-items:center;}
+.mkt-ticker{position:fixed;top:72px;left:0;right:0;height:64px;z-index:999;background:var(--midnight);border-bottom:1px solid rgba(184,150,90,0.18);overflow:hidden;display:flex;align-items:center;}
 .mkt-track{display:flex;white-space:nowrap;will-change:transform;animation:mkScroll 70s linear infinite;}
 .mkt-ticker:hover .mkt-track{animation-play-state:paused;}
 .mkt-seq{display:flex;align-items:center;}
 @keyframes mkScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-.mk-item{display:inline-flex;align-items:center;gap:8px;padding:0 22px;font-size:12px;border-right:1px solid rgba(255,255,255,0.07);}
-.mk-name{color:var(--stone);letter-spacing:0.3px;}
-.mk-lvl{color:#fff;font-weight:600;font-variant-numeric:tabular-nums;}
-.mk-chg{font-weight:600;font-variant-numeric:tabular-nums;}
+.mk-item{display:inline-flex;flex-direction:column;justify-content:center;gap:1px;padding:0 18px;border-right:1px solid rgba(255,255,255,0.07);white-space:nowrap;}
+.mk-name{color:var(--stone);letter-spacing:0.3px;font-size:10.5px;}
+.mk-lvl{color:#fff;font-weight:600;font-variant-numeric:tabular-nums;font-size:14px;}
+.mk-chg{font-weight:600;font-variant-numeric:tabular-nums;font-size:11px;}
+.mk-chg.muted{color:#6b7196;}
 .mk-chg.up{color:#54c68a;}
 .mk-chg.dn{color:#e2685f;}
 /* hub hero sits below nav + ticker */
-.hub-hero{margin-top:112px;}
+.hub-hero{margin-top:136px;}
 /* House view at a glance (Today card) */
 .today-views{display:flex;flex-direction:column;gap:7px;margin-bottom:10px;}
 .tv-row{display:flex;justify-content:space-between;align-items:center;font-size:12px;gap:14px;}
