@@ -252,8 +252,8 @@ td.sc-view,th.sc-view{font-size:12px;color:var(--text-secondary);line-height:1.5
 .mk-name{color:var(--stone);letter-spacing:0.3px;}
 .mk-lvl{color:#fff;font-weight:600;font-variant-numeric:tabular-nums;}
 .mk-chg{font-weight:600;font-variant-numeric:tabular-nums;}
-.mk-chg.up{color:var(--gold-light);}
-.mk-chg.dn{color:#7f86ab;}
+.mk-chg.up{color:#54c68a;}
+.mk-chg.dn{color:#e2685f;}
 /* hub hero sits below nav + ticker */
 .hub-hero{margin-top:112px;}
 /* House view at a glance (Today card) */
