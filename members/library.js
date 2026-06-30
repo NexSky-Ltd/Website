@@ -135,12 +135,38 @@ function paintTicker() {
   var html = TICK.pick.map(function (p, i) { return tkCell(p, i); }).join('');
   track.innerHTML = '<div class="mkt-seq">' + html + '</div><div class="mkt-seq" aria-hidden="true">' + html + '</div>';
 }
+function tkSession(tz, oH, oM, cH, cM) {
+  var p = new Intl.DateTimeFormat('en-GB', { timeZone: tz, weekday: 'short', hour: '2-digit', minute: '2-digit', hour12: false }).formatToParts(new Date());
+  var wd = p.find(function (x) { return x.type === 'weekday'; }).value;
+  if (wd === 'Sat' || wd === 'Sun') return false;
+  var t = (+p.find(function (x) { return x.type === 'hour'; }).value) * 60 + (+p.find(function (x) { return x.type === 'minute'; }).value);
+  return t >= oH * 60 + oM && t <= cH * 60 + cM;
+}
+function tkFxOpen() {
+  var d = new Date(), day = d.getUTCDay(), h = d.getUTCHours();
+  if (day === 6) return false;            // Saturday: closed
+  if (day === 0 && h < 21) return false;  // Sunday before ~21:00 UTC: closed
+  if (day === 5 && h >= 21) return false;  // Friday after ~21:00 UTC: closed
+  return true;
+}
+function tkOpen(p) {
+  var id = p.it.id, cat = p.cat;
+  if (cat === 'crypto') return true;                 // 24/7
+  if (cat === 'fx' || cat === 'commods') return tkFxOpen();
+  if (cat === 'equities') {
+    if (id === 'sx5e') return tkSession('Europe/Berlin', 9, 0, 17, 30);
+    if (id === 'nky') return tkSession('Asia/Tokyo', 9, 0, 15, 0);
+    if (id === 'hsi') return tkSession('Asia/Hong_Kong', 9, 30, 16, 0);
+    return tkSession('America/New_York', 9, 30, 16, 0);  // spx, ndx, em
+  }
+  return false;
+}
 function flutterTicker() {
   if (!TICK) return;
   TICK.pick.forEach(function (p, i) {
     var r1 = (p.it.returns || {})['1d'];
     if (typeof r1 !== 'number') return;
-    TICK.f[i] = TICK.f[i] * 0.85 + (Math.random() * 2 - 1) * 0.00035;
+    TICK.f[i] = tkOpen(p) ? (TICK.f[i] * 0.85 + (Math.random() * 2 - 1) * 0.00035) : 0;
     var v = tkVals(p, TICK.f[i]);
     document.querySelectorAll('#mktTrack .mk-item[data-i="' + i + '"]').forEach(function (el) {
       var a = el.querySelector('.mk-lvl'); if (a) a.textContent = v.lvl;
