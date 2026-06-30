@@ -97,6 +97,7 @@ document.addEventListener('DOMContentLoaded', function () {
   bar.innerHTML = '<div class="mkt-track" id="mktTrack"></div>';
   nav.insertAdjacentElement('afterend', bar);
   renderTicker();
+  setInterval(renderTicker, 5000);
 });
 async function renderTicker() {
   var track = document.getElementById('mktTrack');
