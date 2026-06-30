@@ -246,6 +246,7 @@ td.sc-view,th.sc-view{font-size:12px;color:var(--text-secondary);line-height:1.5
 .mkt-ticker{position:fixed;top:72px;left:0;right:0;height:64px;z-index:999;background:var(--midnight);border-bottom:1px solid rgba(184,150,90,0.18);overflow:hidden;display:flex;align-items:center;}
 .mkt-track{display:flex;white-space:nowrap;will-change:transform;animation:mkScroll 70s linear infinite;}
 .mkt-ticker:hover .mkt-track{animation-play-state:paused;}
+.mkt-flag{position:absolute;right:0;top:0;bottom:0;display:flex;align-items:center;padding:0 16px 0 26px;background:var(--midnight);border-left:1px solid rgba(184,150,90,0.18);font-size:9px;letter-spacing:1px;text-transform:uppercase;color:#8a90b0;white-space:nowrap;}
 .mkt-seq{display:flex;align-items:center;}
 @keyframes mkScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 .mk-item{display:inline-flex;flex-direction:column;justify-content:center;gap:1px;padding:0 18px;border-right:1px solid rgba(255,255,255,0.07);white-space:nowrap;}
