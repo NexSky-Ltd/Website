@@ -7,7 +7,7 @@
 <meta name="robots" content="noindex, nofollow">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231A1F3D'/%3E%3Ctext x='4' y='22' font-family='serif' font-size='18' fill='white'%3EN%3C/text%3E%3Ctext x='16' y='22' font-family='serif' font-size='18' fill='%23B8965A'%3ES%3C/text%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/members/portal.css?v=8">
+<link rel="stylesheet" href="/members/portal.css?v=9">
 </head>
 <body>
 
@@ -27,22 +27,7 @@
   <a href="/cdn-cgi/access/logout" class="nav-logout">Sign out</a>
 </nav>
 
-<!-- Live ticker strip -->
-<div class="hub-ticker">
-  <div class="tradingview-widget-container">
-    <div class="tradingview-widget-container__widget"></div>
-    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
-    {"symbols":[
-      {"proName":"FOREXCOM:SPXUSD","title":"S&P 500"},
-      {"proName":"TVC:SX5E","title":"Euro Stoxx 50"},
-      {"proName":"TVC:GOLD","title":"Gold"},
-      {"proName":"FX:EURUSD","title":"EUR/USD"},
-      {"proName":"TVC:US10Y","title":"US 10Y"},
-      {"proName":"BITSTAMP:BTCUSD","title":"BTC"}
-    ],"showSymbolLogo":true,"colorTheme":"dark","isTransparent":true,"displayMode":"adaptive","locale":"en"}
-    </script>
-  </div>
-</div>
+<!-- Live ticker strip is injected globally by library.js (fed by api.nexsky.io/markets) -->
 
 <!-- Celestial hero -->
 <header class="hub-hero">
@@ -73,8 +58,9 @@
         <div class="today-sum" id="todaySum"></div>
       </div>
       <div class="today-side">
-        <div class="today-stance-label">CIO house view</div>
-        <div class="today-stance" id="todayStance">&mdash;</div>
+        <div class="today-stance-label">House view at a glance</div>
+        <div class="today-views" id="todayViews"></div>
+        <div class="today-legend">&#9650; Overweight &nbsp;&middot;&nbsp; &#9644; Neutral &nbsp;&middot;&nbsp; &#9660; Underweight</div>
       </div>
     </div>
   </a>
@@ -117,7 +103,7 @@
   <div>Private &amp; confidential &middot; For NexSky members only</div>
 </footer>
 
-<script src="/members/library.js?v=8"></script>
+<script src="/members/library.js?v=9"></script>
 <script>
   // Starfield
   (function () {
@@ -161,10 +147,10 @@
       var items = await loadLibrary();
       var brief = items.filter(function (i) { return i.type === 'briefing'; })
                        .sort(function (a, b) { return a.date < b.date ? 1 : -1; })[0];
-      var stance = '';
+      var sc = [];
       try {
         var r = await fetch('/members/allocation.json?t=' + Date.now(), { cache: 'no-cache' });
-        if (r.ok) { var d = await r.json(); stance = d.stance || ''; }
+        if (r.ok) { var d = await r.json(); sc = d.scorecard || []; }
       } catch (e) {}
       if (brief) {
         var card = document.getElementById('todayCard');
@@ -172,7 +158,14 @@
         document.getElementById('todayKicker').textContent = 'Daily briefing · ' + fmtDate(brief.date);
         document.getElementById('todayTitle').textContent = brief.title;
         document.getElementById('todaySum').textContent = brief.summary || '';
-        document.getElementById('todayStance').textContent = stance || 'See the house view';
+        var heads = [['US equities','US equities'],['European equities','Europe'],['Japanese equities','Japan'],['Govt bonds — EUR','Duration EUR'],['Gold','Gold']];
+        document.getElementById('todayViews').innerHTML = heads.map(function (h) {
+          var s = sc.find(function (x) { return x.class === h[0]; });
+          if (!s) return '';
+          var sym = s.tone === 'pos' ? '▲' : s.tone === 'neg' ? '▼' : '▬';
+          var cls = s.tone === 'pos' ? 'ow' : s.tone === 'neg' ? 'uw' : 'n';
+          return '<div class="tv-row"><span class="tv-name">' + esc(h[1]) + '</span><span class="tv-mark ' + cls + '">' + sym + '</span></div>';
+        }).join('');
         card.hidden = false;
       }
       var wk = Date.now() - 7 * 864e5, counts = {};
