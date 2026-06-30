@@ -86,3 +86,52 @@ document.addEventListener('DOMContentLoaded', function () {
     a.addEventListener('click', function () { center.classList.remove('open'); });
   });
 });
+
+// ===== Persistent market ticker (fed by api.nexsky.io/markets) =====
+document.addEventListener('DOMContentLoaded', function () {
+  if (document.querySelector('.mkt-ticker')) return;
+  var nav = document.querySelector('.nav');
+  if (!nav) return;
+  var bar = document.createElement('div');
+  bar.className = 'mkt-ticker';
+  bar.innerHTML = '<div class="mkt-track" id="mktTrack"></div>';
+  nav.insertAdjacentElement('afterend', bar);
+  renderTicker();
+});
+async function renderTicker() {
+  var track = document.getElementById('mktTrack');
+  if (!track) return;
+  try {
+    var d = await (await fetch('https://api.nexsky.io/markets', { cache: 'no-cache' })).json();
+    var m = d.macro || {};
+    var order = [
+      ['equities', ['spx', 'ndx', 'sx5e', 'nky', 'hsi', 'em']],
+      ['commods', ['gold', 'brent']],
+      ['crypto', ['btc', 'eth']],
+      ['usYields', ['us10y']],
+      ['deYields', ['de10y']]
+    ];
+    var pick = [];
+    order.forEach(function (o) {
+      (m[o[0]] || []).forEach(function (it) { if (o[1].indexOf(it.id) >= 0) pick.push({ cat: o[0], it: it }); });
+    });
+    function lvl(it, cat) {
+      var v = it.level;
+      if (cat === 'usYields' || cat === 'deYields') return v.toFixed(2) + '%';
+      if (it.id === 'em') return v.toFixed(1);
+      return v.toLocaleString('en-US', { maximumFractionDigits: v > 1000 ? 0 : 2 });
+    }
+    function cell(p) {
+      var it = p.it, r1 = (it.returns || {})['1d'], chg = '';
+      if (typeof r1 === 'number') {
+        var up = r1 >= 0;
+        chg = '<span class="mk-chg ' + (up ? 'up' : 'dn') + '">' + (up ? '▲' : '▼') + ' ' + Math.abs(r1 * 100).toFixed(2) + '%</span>';
+      }
+      return '<span class="mk-item"><span class="mk-name">' + esc(it.name) + '</span><span class="mk-lvl">' + lvl(it, p.cat) + '</span>' + chg + '</span>';
+    }
+    var html = pick.map(cell).join('');
+    track.innerHTML = '<div class="mkt-seq">' + html + '</div><div class="mkt-seq" aria-hidden="true">' + html + '</div>';
+  } catch (e) {
+    track.innerHTML = '<div class="mkt-seq"><span class="mk-item" style="opacity:.55">Live market data unavailable</span></div>';
+  }
+}
