@@ -88,17 +88,66 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 // ===== Persistent market ticker (fed by api.nexsky.io/markets) =====
+// Real data refreshes every 5s (worker-cached ~10min). Between refreshes a tiny
+// cosmetic flutter walks each value ±~0.05% so the strip "ticks" like a live feed;
+// the "Indicative · delayed" tag makes clear it is not a real-time quote.
+var TICK = null;
 document.addEventListener('DOMContentLoaded', function () {
   if (document.querySelector('.mkt-ticker')) return;
   var nav = document.querySelector('.nav');
   if (!nav) return;
   var bar = document.createElement('div');
   bar.className = 'mkt-ticker';
-  bar.innerHTML = '<div class="mkt-track" id="mktTrack"></div>';
+  bar.innerHTML = '<div class="mkt-track" id="mktTrack"></div><div class="mkt-flag">Indicative &middot; delayed</div>';
   nav.insertAdjacentElement('afterend', bar);
   renderTicker();
   setInterval(renderTicker, 5000);
+  setInterval(flutterTicker, 1000);
 });
+function tkFmt(v, dec) { return v.toLocaleString('en-US', { minimumFractionDigits: dec, maximumFractionDigits: dec }); }
+function tkDecimals(it, cat) {
+  if (cat === 'fx') return it.id === 'eurusd' ? 4 : 2;
+  if (it.id === 'em') return 2;
+  return Math.abs(it.level) >= 1000 ? 0 : 2;
+}
+function tkLevel(v, it, cat) {
+  if (cat === 'usYields' || cat === 'deYields') return v.toFixed(2) + '%';
+  if (cat === 'fx') return it.id === 'eurusd' ? v.toFixed(4) : v.toFixed(2);
+  if (it.id === 'em') return v.toFixed(1);
+  return v.toLocaleString('en-US', { maximumFractionDigits: v > 1000 ? 0 : 2 });
+}
+function tkVals(p, f) {
+  var it = p.it, cat = p.cat, r1 = (it.returns || {})['1d'];
+  var level = it.level * (1 + (f || 0));
+  var lvl = tkLevel(level, it, cat);
+  if (typeof r1 !== 'number') return { lvl: lvl, chg: '—', cls: 'muted' };
+  var prev = it.level / (1 + r1), absC = level - prev, pct = prev ? absC / prev : 0, up = absC >= 0, dec = tkDecimals(it, cat);
+  var chg = (absC >= 0 ? '+' : '-') + tkFmt(Math.abs(absC), dec) + ' (' + (up ? '+' : '-') + Math.abs(pct * 100).toFixed(2) + '%)';
+  return { lvl: lvl, chg: chg, cls: up ? 'up' : 'dn' };
+}
+function tkCell(p, i) {
+  var v = tkVals(p, TICK ? TICK.f[i] : 0);
+  return '<div class="mk-item" data-i="' + i + '"><div class="mk-name">' + esc(p.it.name) + '</div><div class="mk-lvl">' + v.lvl + '</div><div class="mk-chg ' + v.cls + '">' + v.chg + '</div></div>';
+}
+function paintTicker() {
+  var track = document.getElementById('mktTrack');
+  if (!track || !TICK) return;
+  var html = TICK.pick.map(function (p, i) { return tkCell(p, i); }).join('');
+  track.innerHTML = '<div class="mkt-seq">' + html + '</div><div class="mkt-seq" aria-hidden="true">' + html + '</div>';
+}
+function flutterTicker() {
+  if (!TICK) return;
+  TICK.pick.forEach(function (p, i) {
+    var r1 = (p.it.returns || {})['1d'];
+    if (typeof r1 !== 'number') return;
+    TICK.f[i] = TICK.f[i] * 0.85 + (Math.random() * 2 - 1) * 0.00035;
+    var v = tkVals(p, TICK.f[i]);
+    document.querySelectorAll('#mktTrack .mk-item[data-i="' + i + '"]').forEach(function (el) {
+      var a = el.querySelector('.mk-lvl'); if (a) a.textContent = v.lvl;
+      var b = el.querySelector('.mk-chg'); if (b) { b.className = 'mk-chg ' + v.cls; b.textContent = v.chg; }
+    });
+  });
+}
 async function renderTicker() {
   var track = document.getElementById('mktTrack');
   if (!track) return;
@@ -114,37 +163,11 @@ async function renderTicker() {
       ['deYields', ['de10y']]
     ];
     var pick = [];
-    order.forEach(function (o) {
-      (m[o[0]] || []).forEach(function (it) { if (o[1].indexOf(it.id) >= 0) pick.push({ cat: o[0], it: it }); });
-    });
-    function lvl(it, cat) {
-      var v = it.level;
-      if (cat === 'usYields' || cat === 'deYields') return v.toFixed(2) + '%';
-      if (cat === 'fx') return it.id === 'eurusd' ? v.toFixed(4) : v.toFixed(2);
-      if (it.id === 'em') return v.toFixed(1);
-      return v.toLocaleString('en-US', { maximumFractionDigits: v > 1000 ? 0 : 2 });
-    }
-    function fmtNum(v, dec) { return v.toLocaleString('en-US', { minimumFractionDigits: dec, maximumFractionDigits: dec }); }
-    function decimalsFor(it, cat) {
-      if (cat === 'fx') return it.id === 'eurusd' ? 4 : 2;
-      if (it.id === 'em') return 2;
-      return Math.abs(it.level) >= 1000 ? 0 : 2;
-    }
-    function cell(p) {
-      var it = p.it, cat = p.cat, r1 = (it.returns || {})['1d'];
-      var line3 = '<div class="mk-chg muted">—</div>';
-      if (typeof r1 === 'number') {
-        var up = r1 >= 0, dec = decimalsFor(it, cat);
-        var abs = it.level * r1 / (1 + r1);
-        var absStr = (abs >= 0 ? '+' : '-') + fmtNum(Math.abs(abs), dec);
-        var pctStr = (up ? '+' : '-') + Math.abs(r1 * 100).toFixed(2) + '%';
-        line3 = '<div class="mk-chg ' + (up ? 'up' : 'dn') + '">' + absStr + ' (' + pctStr + ')</div>';
-      }
-      return '<div class="mk-item"><div class="mk-name">' + esc(it.name) + '</div><div class="mk-lvl">' + lvl(it, cat) + '</div>' + line3 + '</div>';
-    }
-    var html = pick.map(cell).join('');
-    track.innerHTML = '<div class="mkt-seq">' + html + '</div><div class="mkt-seq" aria-hidden="true">' + html + '</div>';
+    order.forEach(function (o) { (m[o[0]] || []).forEach(function (it) { if (o[1].indexOf(it.id) >= 0) pick.push({ cat: o[0], it: it }); }); });
+    var keepF = (TICK && TICK.f && TICK.f.length === pick.length) ? TICK.f : pick.map(function () { return 0; });
+    TICK = { pick: pick, f: keepF };
+    paintTicker();
   } catch (e) {
-    track.innerHTML = '<div class="mkt-seq"><span class="mk-item" style="opacity:.55">Live market data unavailable</span></div>';
+    if (!TICK) track.innerHTML = '<div class="mkt-seq"><span class="mk-item" style="opacity:.55">Live market data unavailable</span></div>';
   }
 }
