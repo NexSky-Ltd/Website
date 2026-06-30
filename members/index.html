@@ -7,7 +7,7 @@
 <meta name="robots" content="noindex, nofollow">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231A1F3D'/%3E%3Ctext x='4' y='22' font-family='serif' font-size='18' fill='white'%3EN%3C/text%3E%3Ctext x='16' y='22' font-family='serif' font-size='18' fill='%23B8965A'%3ES%3C/text%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/members/portal.css?v=7">
+<link rel="stylesheet" href="/members/portal.css?v=8">
 </head>
 <body>
 
@@ -27,37 +27,81 @@
   <a href="/cdn-cgi/access/logout" class="nav-logout">Sign out</a>
 </nav>
 
-<header class="page-header">
-  <div class="page-header-inner">
+<!-- Live ticker strip -->
+<div class="hub-ticker">
+  <div class="tradingview-widget-container">
+    <div class="tradingview-widget-container__widget"></div>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+    {"symbols":[
+      {"proName":"FOREXCOM:SPXUSD","title":"S&P 500"},
+      {"proName":"TVC:SX5E","title":"Euro Stoxx 50"},
+      {"proName":"TVC:GOLD","title":"Gold"},
+      {"proName":"FX:EURUSD","title":"EUR/USD"},
+      {"proName":"TVC:US10Y","title":"US 10Y"},
+      {"proName":"BITSTAMP:BTCUSD","title":"BTC"}
+    ],"showSymbolLogo":true,"colorTheme":"dark","isTransparent":true,"displayMode":"adaptive","locale":"en"}
+    </script>
+  </div>
+</div>
+
+<!-- Celestial hero -->
+<header class="hub-hero">
+  <svg class="hub-stars" id="hubStars" viewBox="0 0 1440 280" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
+  <div class="hub-hero-inner">
     <div class="page-label">Members Portal</div>
-    <h1 class="page-title">Welcome back</h1>
-    <p class="page-sub">Your private desk: live markets, our latest research, the daily briefing archive, and the house view.</p>
+    <h1 class="page-title" id="greet">Welcome back</h1>
+    <p class="page-sub">Your private desk: live markets, our latest research, the daily briefing, and the house view.</p>
+    <div class="hub-meta">
+      <span id="hubClock">&mdash;</span>
+      <span class="hub-dot">&middot;</span>
+      <span id="hubSession">&mdash;</span>
+    </div>
   </div>
 </header>
 
 <main>
+  <!-- Today at NexSky -->
+  <a class="today-card" id="todayCard" href="#" hidden>
+    <div class="today-top">
+      <span class="today-label">Today at NexSky</span>
+      <span class="today-cta">Open &rarr;</span>
+    </div>
+    <div class="today-grid">
+      <div class="today-main">
+        <div class="today-kicker" id="todayKicker">Daily briefing</div>
+        <div class="today-title" id="todayTitle"></div>
+        <div class="today-sum" id="todaySum"></div>
+      </div>
+      <div class="today-side">
+        <div class="today-stance-label">CIO house view</div>
+        <div class="today-stance" id="todayStance">&mdash;</div>
+      </div>
+    </div>
+  </a>
+
   <div class="hub-grid">
-    <a class="hub-card secondary" href="/members/cio.html">
+    <a class="hub-card secondary" data-type="cio" href="/members/cio.html">
       <svg class="hub-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polygon points="12 7 14 12 12 17 10 12"/></svg>
       <div class="hub-name">CIO House View</div>
       <div class="hub-desc">Strategic allocation and tactical positioning.</div>
     </a>
-    <a class="hub-card secondary" href="/members/research.html?type=briefing">
+    <a class="hub-card secondary" data-type="briefing" href="/members/research.html?type=briefing">
       <svg class="hub-icon" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="16" rx="1"/><line x1="4" y1="9" x2="20" y2="9"/><line x1="9" y1="3" x2="9" y2="6"/><line x1="15" y1="3" x2="15" y2="6"/></svg>
       <div class="hub-name">Daily Briefing</div>
       <div class="hub-desc">Searchable archive, updated each morning.</div>
     </a>
-    <a class="hub-card primary" href="/members.html">
+    <a class="hub-card primary feature" href="/members.html">
       <svg class="hub-icon" viewBox="0 0 24 24"><line x1="4" y1="20" x2="20" y2="20"/><rect x="5" y="11" width="3" height="9"/><rect x="10.5" y="6" width="3" height="14"/><rect x="16" y="13" width="3" height="7"/></svg>
       <div class="hub-name">Live Market</div>
       <div class="hub-desc">Live cross-asset heatmap, sectors and charts.</div>
+      <span class="hub-live"><span class="hub-live-dot"></span>Live</span>
     </a>
-    <a class="hub-card secondary" href="/members/research.html?type=opportunities">
+    <a class="hub-card secondary" data-type="opportunities" href="/members/research.html?type=opportunities">
       <svg class="hub-icon" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="1"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="3" y1="12" x2="21" y2="12"/></svg>
       <div class="hub-name">Opportunities</div>
       <div class="hub-desc">Deal teasers and co-investment.</div>
     </a>
-    <a class="hub-card secondary" href="/members/research.html?type=research">
+    <a class="hub-card secondary" data-type="research" href="/members/research.html?type=research">
       <svg class="hub-icon" viewBox="0 0 24 24"><path d="M6 2h8l4 4v16H6z"/><path d="M14 2v4h4"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>
       <div class="hub-name">Research</div>
       <div class="hub-desc">Notes, white papers and teasers.</div>
@@ -73,7 +117,77 @@
   <div>Private &amp; confidential &middot; For NexSky members only</div>
 </footer>
 
-<script src="/members/library.js?v=7"></script>
-<script>renderGrid('libGrid', { limit: 6 });</script>
+<script src="/members/library.js?v=8"></script>
+<script>
+  // Starfield
+  (function () {
+    var svg = document.getElementById('hubStars');
+    if (!svg) return;
+    var ns = 'http://www.w3.org/2000/svg', html = '';
+    for (var i = 0; i < 60; i++) {
+      var x = Math.random() * 1440, y = Math.random() * 280,
+          r = Math.random() * 1.3 + 0.3, o = (Math.random() * 0.5 + 0.25).toFixed(2),
+          tw = Math.random() > 0.55 ? ' class="tw"' : '',
+          dl = (Math.random() * 4.5).toFixed(2);
+      html += '<circle cx="' + x.toFixed(1) + '" cy="' + y.toFixed(1) + '" r="' + r.toFixed(2) + '" fill="#fff" opacity="' + o + '"' + tw + ' style="animation-delay:' + dl + 's"/>';
+    }
+    svg.innerHTML = html;
+  })();
+
+  // Greeting + clock + market sessions
+  function inWindow(tz, oH, oM, cH, cM) {
+    var p = new Intl.DateTimeFormat('en-GB', { timeZone: tz, weekday: 'short', hour: '2-digit', minute: '2-digit', hour12: false }).formatToParts(new Date());
+    var wd = p.find(function (x) { return x.type === 'weekday'; }).value;
+    if (wd === 'Sat' || wd === 'Sun') return false;
+    var hh = +p.find(function (x) { return x.type === 'hour'; }).value;
+    var mm = +p.find(function (x) { return x.type === 'minute'; }).value;
+    var m = hh * 60 + mm;
+    return m >= oH * 60 + oM && m <= cH * 60 + cM;
+  }
+  function tick() {
+    var now = new Date(), h = now.getHours();
+    var greet = h >= 5 && h < 12 ? 'Good morning' : h >= 12 && h < 18 ? 'Good afternoon' : 'Good evening';
+    document.getElementById('greet').textContent = greet;
+    document.getElementById('hubClock').textContent = now.toLocaleString('en-GB', { weekday: 'long', day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' });
+    var lon = inWindow('Europe/London', 8, 0, 16, 30), ny = inWindow('America/New_York', 9, 30, 16, 0);
+    function d(on) { return '<span class="mk ' + (on ? 'on' : 'off') + '">&#9679;</span>'; }
+    document.getElementById('hubSession').innerHTML = d(lon) + ' London &nbsp;&nbsp; ' + d(ny) + ' New York';
+  }
+  tick(); setInterval(tick, 30000);
+
+  // Today card + new-this-week badges
+  (async function () {
+    try {
+      var items = await loadLibrary();
+      var brief = items.filter(function (i) { return i.type === 'briefing'; })
+                       .sort(function (a, b) { return a.date < b.date ? 1 : -1; })[0];
+      var stance = '';
+      try {
+        var r = await fetch('/members/allocation.json?t=' + Date.now(), { cache: 'no-cache' });
+        if (r.ok) { var d = await r.json(); stance = d.stance || ''; }
+      } catch (e) {}
+      if (brief) {
+        var card = document.getElementById('todayCard');
+        card.href = brief.url || '/members/article.html?slug=' + brief.slug;
+        document.getElementById('todayKicker').textContent = 'Daily briefing · ' + fmtDate(brief.date);
+        document.getElementById('todayTitle').textContent = brief.title;
+        document.getElementById('todaySum').textContent = brief.summary || '';
+        document.getElementById('todayStance').textContent = stance || 'See the house view';
+        card.hidden = false;
+      }
+      var wk = Date.now() - 7 * 864e5, counts = {};
+      items.forEach(function (i) {
+        var t = new Date(i.date + 'T00:00:00').getTime();
+        if (t >= wk) counts[i.type] = (counts[i.type] || 0) + 1;
+      });
+      document.querySelectorAll('.hub-card[data-type]').forEach(function (c) {
+        var n = counts[c.dataset.type];
+        if (n) { var b = document.createElement('span'); b.className = 'hub-badge'; b.textContent = n + ' new'; c.appendChild(b); }
+      });
+    } catch (e) {}
+  })();
+
+  renderGrid('libGrid', { limit: 6 });
+</script>
 </body>
 </html>
