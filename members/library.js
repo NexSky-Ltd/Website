@@ -106,6 +106,7 @@ async function renderTicker() {
     var m = d.macro || {};
     var order = [
       ['equities', ['spx', 'ndx', 'sx5e', 'nky', 'hsi', 'em']],
+      ['fx', ['eurusd', 'dxy']],
       ['commods', ['gold', 'brent']],
       ['crypto', ['btc', 'eth']],
       ['usYields', ['us10y']],
@@ -118,6 +119,7 @@ async function renderTicker() {
     function lvl(it, cat) {
       var v = it.level;
       if (cat === 'usYields' || cat === 'deYields') return v.toFixed(2) + '%';
+      if (cat === 'fx') return it.id === 'eurusd' ? v.toFixed(4) : v.toFixed(2);
       if (it.id === 'em') return v.toFixed(1);
       return v.toLocaleString('en-US', { maximumFractionDigits: v > 1000 ? 0 : 2 });
     }
